@@ -699,13 +699,13 @@ public:
     if (input=="innerallstubin"){
       FPGAAllStubs* tmp=dynamic_cast<FPGAAllStubs*>(memory);
       assert(tmp!=0);
-      innerallstubs_=tmp;
+      innerallstubs_.push_back(tmp);
       return;
     }
     if (input=="outerallstubin"){
       FPGAAllStubs* tmp=dynamic_cast<FPGAAllStubs*>(memory);
       assert(tmp!=0);
-      outerallstubs_=tmp;
+      outerallstubs_.push_back(tmp);
       return;
     }
     if (input=="stubpair1in"||
@@ -1035,7 +1035,6 @@ public:
       for(unsigned int i=0;i<stubpairs_[l]->nStubPairs();i++){
 
 	countall++;
-
 	L1TStub* innerStub=stubpairs_[l]->getL1TStub1(i);
 	FPGAStub* innerFPGAStub=stubpairs_[l]->getFPGAStub1(i);
 
@@ -1568,6 +1567,7 @@ public:
     zprojapprox[2]   = ITC->zL_2_final.get_fval();
     zprojapprox[3]   = ITC->zL_3_final.get_fval();
 
+
     for(int i=0; i<4; ++i){
       phiderapprox[i] = ITC->der_phiL_final.get_fval();
       zderapprox[i]   = ITC->der_zL_final.get_fval();
@@ -1841,14 +1841,14 @@ public:
 	  <<endl;
     }	        
         
-    FPGATracklet* tracklet=new FPGATracklet(innerStub,outerStub,
-					    innerFPGAStub,outerFPGAStub,
+    FPGATracklet* tracklet=new FPGATracklet(innerStub,NULL,outerStub,
+					    innerFPGAStub,NULL,outerFPGAStub,
 					    iSector_,
 					    phioffset_,
-					    rinv,phi0,z0,t,
-					    rinvapprox,phi0approx,
+					    rinv,phi0,0.0,z0,t,
+					    rinvapprox,phi0approx,0.0,
 					    z0approx,tapprox,
-					    irinv,iphi0,iz0,it,validproj,
+					    irinv,iphi0,0,iz0,it,validproj,
 					    iphiproj,izproj,iphider,izder,
 					    minusNeighbor,plusNeighbor,
 					    phiproj,zproj,phider,zder,
@@ -2276,16 +2276,15 @@ public:
 	  <<"   "<<z0<<" "<<z0approx<<" "<<ITC->z0_final.get_fval()
 	  <<endl;
     }
-    
 	    
-    FPGATracklet* tracklet=new FPGATracklet(innerStub,outerStub,
-					    innerFPGAStub,outerFPGAStub,
+    FPGATracklet* tracklet=new FPGATracklet(innerStub,NULL,outerStub,
+					    innerFPGAStub,NULL,outerFPGAStub,
 					    iSector_,
 					    phioffset_,
-					    rinv,phi0,z0,t,
-					    rinvapprox,phi0approx,
+					    rinv,phi0,0.0,z0,t,
+					    rinvapprox,phi0approx,0.0,
 					    z0approx,tapprox,
-					    irinv,iphi0,iz0,it,
+					    irinv,iphi0,0,iz0,it,
 					    validproj,
 					    iphiproj,izproj,iphider,izder,
 					    minusNeighbor,plusNeighbor,	
@@ -2557,7 +2556,7 @@ public:
 
     //"protection" from the original, reinterpreted
     if (iz0>= 1<<(ITC->z0_final.get_nbits()-1)) iz0=(1<<(ITC->z0_final.get_nbits()-1))-1;
-    if (iz0<=-1<<(ITC->z0_final.get_nbits()-1)) iz0=1-(1<<(ITC->z0_final.get_nbits()-1))-1; 
+    if (iz0<=-(1<<(ITC->z0_final.get_nbits()-1))) iz0=1-(1<<(ITC->z0_final.get_nbits()-1))-1; 
     if (irinv>= (1<<(ITC->rinv_final.get_nbits()-1))) irinv=(1<<(ITC->rinv_final.get_nbits()-1))-1;
     if (irinv<=-(1<<(ITC->rinv_final.get_nbits()-1))) irinv=1-(1<<(ITC->rinv_final.get_nbits()-1))-1; 
 
@@ -2730,16 +2729,15 @@ public:
 	  <<"   "<<z0<<" "<<iz0<<" "<<ITC->z0_final.get_fval()
 	  <<endl;
     }
-
 	      
-    FPGATracklet* tracklet=new FPGATracklet(innerStub,outerStub,
-					    innerFPGAStub,outerFPGAStub,
+    FPGATracklet* tracklet=new FPGATracklet(innerStub,NULL,outerStub,
+					    innerFPGAStub,NULL,outerFPGAStub,
 					    iSector_,
 					    phioffset_,
-					    rinv,phi0,z0,t,
-					    rinvapprox,phi0approx,
+					    rinv,phi0,0.0,z0,t,
+					    rinvapprox,phi0approx,0.0,
 					    z0approx,tapprox,
-					    irinv,iphi0,iz0,it,
+					    irinv,iphi0,0,iz0,it,
 					    validproj,
 					    iphiproj,izproj,iphider,izder,
 					    minusNeighbor,plusNeighbor,
@@ -2815,8 +2813,8 @@ private:
   
   double zprojoverlap_[4];
 
-  FPGAAllStubs* innerallstubs_;
-  FPGAAllStubs* outerallstubs_;
+  vector<FPGAAllStubs*> innerallstubs_;
+  vector<FPGAAllStubs*> outerallstubs_;
   vector<FPGAStubPairs*> stubpairs_;
 
   FPGATrackletParameters* trackletpars_;

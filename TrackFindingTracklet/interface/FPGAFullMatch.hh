@@ -19,6 +19,8 @@ public:
     phimin_=phimin;
     phimax_=phimax;
     string subname=name.substr(8,2);
+    if (hourglassExtended)
+      subname=name.substr(10,2);
     layer_ = 0;
     disk_  = 0;
     if (subname=="L1") layer_=1;

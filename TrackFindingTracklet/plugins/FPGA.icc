@@ -252,6 +252,24 @@ if (writeHitEff) {
     }
     TETimer.stop();
 
+    TEDTimer.start();
+    for (unsigned int k=0;k<NSector;k++) {
+      sectors[k]->executeTED();	
+      if(writemem&&k==writememsect){
+        sectors[k]->writeSP(first);
+      } 
+    }
+    TEDTimer.stop();
+
+    TRETimer.start();
+    for (unsigned int k=0;k<NSector;k++) {
+      sectors[k]->executeTRE();	
+      if(writemem&&k==writememsect){
+        sectors[k]->writeST(first);
+      } 
+    }
+    TRETimer.stop();
+
 
     TCTimer.start();
     for (unsigned int k=0;k<NSector;k++) {
@@ -262,6 +280,16 @@ if (writeHitEff) {
       } 
     }
     TCTimer.stop();
+
+    TCDTimer.start();
+    for (unsigned int k=0;k<NSector;k++) {
+      sectors[k]->executeTCD();	 
+      if(writemem&&k==writememsect){
+        sectors[k]->writeTPAR(first);
+        sectors[k]->writeTPROJ(first);
+      } 
+    }
+    TCDTimer.stop();
 
 
 
@@ -341,6 +369,7 @@ if (writeHitEff) {
       }
     }
     FTTimer.stop();
+
 
     PDTimer.start();
     for (unsigned int k=0;k<NSector;k++) {

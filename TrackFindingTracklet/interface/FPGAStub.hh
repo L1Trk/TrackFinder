@@ -279,7 +279,6 @@ public:
 
   //Returns a number from 0 to 31
   int iphivmRaw() const {
-
     int iphivm=(phicorr_.value()>>(phicorr_.nbits()-5));
     assert(iphivm>=0);
     assert(iphivm<32);
@@ -562,14 +561,14 @@ public:
     if (vmbits_.value()!=-1) cout << "VMbits already set : "<<vmbits_.value()<<" "<<bits<<endl;
     assert(vmbits_.value()==-1); //Should never change the value; -1 means uninitialized
     if (layer_.value()==0 or layer_.value()==2 or layer_.value()==4) { // L1, L3, L5
-      nbits=2*NLONGVMBITS+1+3;
+      nbits=2*(2*NLONGVMBITS+1+3);
     }
     if (layer_.value()==1 or layer_.value()==3 or layer_.value()==5) { // L2, L4, L6
       nbits=2*NLONGVMBITS; //vmstub really only use half of these bits.
     }
     int disk=abs(disk_.value());
     if (disk==1 or disk==3) { // D1, D3
-      nbits=2*NLONGVMBITS+3;
+      nbits=(2*NLONGVMBITS+3) + (2*NLONGVMBITS+1+3);
     }
     if (disk==2 or disk==4) { // D2, D4
       nbits=2*NLONGVMBITS;
@@ -580,6 +579,23 @@ public:
   }
 
   FPGAWord getVMBits() const { return vmbits_; }
+
+  void setVMBitsExtended(int bits){
+    int nbits=-1;
+    if (vmbitsextended_.value()!=-1) cout << "VMbits already set : "<<vmbits_.value()<<" "<<bits<<endl;
+    assert(vmbitsextended_.value()==-1); //Should never change the value; -1 means uninitialized
+    if (layer_.value()== 1) { // L2 (first in L2L3D1, same as inner)
+      nbits=(2*NLONGVMBITS+1+3) + (2*NLONGVMBITS+1+3);
+    }
+    if (layer_.value()== 2) { // L3 (second in L2L3D1, same as outer)
+      nbits=2*NLONGVMBITS; //vmstub really only use half of these bits.
+    }
+    //cout << "layer, disk : "<<layer_.value()<<" "<<disk_.value()<<endl;
+    assert(nbits>=0);
+    vmbitsextended_.set(bits,nbits,true,__LINE__,__FILE__);
+  }
+
+  FPGAWord getVMBitsExtended() const { return vmbitsextended_; }
 
   void setVMBitsOverlap(int bits){
     int nbits=-1;
@@ -605,7 +621,7 @@ public:
     if (vmbitsextra_.value()!=-1) cout << "Error VMbits extra already set : "<<vmbits_.value()<<" "<<bits<<endl;
     assert(vmbitsextra_.value()==-1); //Should never change the value; -1 means uninitialized
     if (layer_.value()==1) { //L2
-      nbits=2*NLONGVMBITS+1+3;
+      nbits=(2*NLONGVMBITS+1+3) + (2*NLONGVMBITS+1+3);
     }
     if (layer_.value()==2) { //L3
       nbits=2*NLONGVMBITS;
@@ -619,6 +635,24 @@ public:
   
 
 
+  void setVMBitsOverlapExtended(int bits){
+    int nbits=-1;
+    if (vmbitsoverlapextended_.value()!=-1) cout << "VMbits already set : "<<vmbits_.value()<<" "<<bits<<endl;
+    assert(vmbitsoverlapextended_.value()==-1); //Should never change the value; -1 means uninitialized
+    if (layer_.value()==1 ) { // L2 (third in D1D2L2, same as outer)
+      nbits=2*NLONGVMBITS;
+    }
+    int disk=abs(disk_.value());
+    if (disk==1 ) { // D1 (third in L2L3D1, same as outer)
+      nbits=2*NLONGVMBITS;
+    }
+    //cout << "layer, disk, bits : "<<layer_.value()<<" "<<disk_.value()<<" : "<<bits <<"("<<nbits<<")"<<endl;
+    assert(nbits>=0);
+    vmbitsoverlapextended_.set(bits,nbits,true,__LINE__,__FILE__);
+  }
+
+  FPGAWord getVMBitsOverlapExtended() const { return vmbitsoverlapextended_; }
+  
   FPGAWord phivm() const {return phivm_; }
 
   FPGAWord bend() const {return bend_; }
@@ -684,6 +718,7 @@ public:
     } else {
       return z_.value()*kz+sign*zmean[abs(disk_.value())-1];
     }
+    //return z_.value()*kz+sign*zmean[abs(disk_.value())-1];
   }
 
   double phiapprox(double phimin, double phimax){
@@ -828,6 +863,8 @@ private:
   FPGAWord vmbits_;
   FPGAWord vmbitsoverlap_;
   FPGAWord vmbitsextra_;
+  FPGAWord vmbitsextended_;
+  FPGAWord vmbitsoverlapextended_;
 
   FPGAWord finer_;
   FPGAWord finez_;

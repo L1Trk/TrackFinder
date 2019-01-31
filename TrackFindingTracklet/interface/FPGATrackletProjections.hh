@@ -19,6 +19,10 @@ public:
 
     string subname=name.substr(11,2);
     if (subname[0]=='_') subname=name.substr(12,2);
+    if (hourglassExtended) {
+      subname=name.substr(14,2);
+      if (subname[0]=='_') subname=name.substr(15,2);
+    }
     
     layer_ = 0;
     disk_  = 0;

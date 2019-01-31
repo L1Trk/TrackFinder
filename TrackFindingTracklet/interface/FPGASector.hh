@@ -9,6 +9,7 @@
 #include "FPGAVMStubsTE.hh"
 #include "FPGAVMStubsME.hh"
 #include "FPGAStubPairs.hh"
+#include "FPGAStubTriplets.hh"
 #include "FPGATrackletParameters.hh"
 #include "FPGATrackletProjections.hh"
 #include "FPGAAllProjections.hh"
@@ -22,7 +23,10 @@
 #include "FPGAVMRouterME.hh"
 #include "FPGAVMRouterTE.hh"
 #include "FPGATrackletEngine.hh"
+#include "FPGATrackletEngineDisplaced.hh"
+#include "FPGATripletEngine.hh"
 #include "FPGATrackletCalculator.hh"
+#include "FPGATrackletCalculatorDisplaced.hh"
 #include "FPGAProjectionRouter.hh"
 #include "FPGAProjectionTransceiver.hh"
 #include "FPGAMatchEngine.hh"
@@ -137,10 +141,15 @@ public:
       VMSME_.push_back(new FPGAVMStubsME(memName,isector_,phimin_,phimax_));
       Memories_[memName]=VMSME_.back();
       MemoriesV_.push_back(VMSME_.back());
-    } else if (memType=="StubPairs:") {
+    } else if (memType=="StubPairs:"||
+               memType=="StubPairsDisplaced:") {
       SP_.push_back(new FPGAStubPairs(memName,isector_,phimin_,phimax_));
       Memories_[memName]=SP_.back();
       MemoriesV_.push_back(SP_.back());
+    } else if (memType=="StubTriplets:") {
+      ST_.push_back(new FPGAStubTriplets(memName,isector_,phimin_,phimax_));
+      Memories_[memName]=ST_.back();
+      MemoriesV_.push_back(ST_.back());
     } else if (memType=="TrackletParameters:") {
       TPAR_.push_back(new FPGATrackletParameters(memName,isector_,phimin_,phimax_));
       Memories_[memName]=TPAR_.back();
@@ -193,10 +202,19 @@ public:
     } else if (procType=="TrackletEngine:") {
       TE_.push_back(new FPGATrackletEngine(procName,isector_));
       Processes_[procName]=TE_.back();
+    } else if (procType=="TrackletEngineDisplaced:") {
+      TED_.push_back(new FPGATrackletEngineDisplaced(procName,isector_));
+      Processes_[procName]=TED_.back();
+    } else if (procType=="TripletEngine:") {
+      TRE_.push_back(new FPGATripletEngine(procName,isector_));
+      Processes_[procName]=TRE_.back();
     } else if (procType=="TrackletCalculator:"||
 	       procType=="TrackletDiskCalculator:") {
       TC_.push_back(new FPGATrackletCalculator(procName,isector_));
       Processes_[procName]=TC_.back();
+    } else if (procType=="TrackletCalculatorDisplaced:") {
+      TCD_.push_back(new FPGATrackletCalculatorDisplaced(procName,isector_));
+      Processes_[procName]=TCD_.back();
     } else if (procType=="ProjectionRouter:") {
       PR_.push_back(new FPGAProjectionRouter(procName,isector_));
       Processes_[procName]=PR_.back();
@@ -322,6 +340,12 @@ public:
     }
   }
 
+  void writeST(bool first) {
+    for (unsigned int i=0;i<ST_.size();i++){
+      ST_[i]->writeST(first);
+    }
+  }
+
   void writeTPAR(bool first) {
     for (unsigned int i=0;i<TPAR_.size();i++){
       TPAR_[i]->writeTPAR(first);
@@ -414,9 +438,27 @@ public:
     }
   }
 
+  void executeTED(){
+    for (unsigned int i=0;i<TED_.size();i++){
+      TED_[i]->execute();
+    }
+  }
+
+  void executeTRE(){
+    for (unsigned int i=0;i<TRE_.size();i++){
+      TRE_[i]->execute();
+    }
+  }
+
   void executeTC(){
     for (unsigned int i=0;i<TC_.size();i++){
       TC_[i]->execute();
+    }
+  }
+
+  void executeTCD(){
+    for (unsigned int i=0;i<TCD_.size();i++){
+      TCD_[i]->execute();
     }
   }
 
@@ -574,6 +616,7 @@ private:
   std::vector<FPGAVMStubsTE*> VMSTE_;
   std::vector<FPGAVMStubsME*> VMSME_;
   std::vector<FPGAStubPairs*> SP_;
+  std::vector<FPGAStubTriplets*> ST_;
   std::vector<FPGATrackletParameters*> TPAR_;
   std::vector<FPGATrackletProjections*> TPROJ_;
   std::vector<FPGAAllProjections*> AP_;
@@ -588,7 +631,10 @@ private:
   std::vector<FPGAVMRouterTE*> VMRTE_;
   std::vector<FPGAVMRouterME*> VMRME_;
   std::vector<FPGATrackletEngine*> TE_;
+  std::vector<FPGATrackletEngineDisplaced*> TED_;
+  std::vector<FPGATripletEngine*> TRE_;
   std::vector<FPGATrackletCalculator*> TC_;
+  std::vector<FPGATrackletCalculatorDisplaced*> TCD_;
   std::vector<FPGAProjectionRouter*> PR_;
   std::vector<FPGAProjectionTransceiver*> PT_;
   std::vector<FPGAMatchEngine*> ME_;

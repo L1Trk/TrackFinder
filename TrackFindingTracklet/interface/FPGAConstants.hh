@@ -7,15 +7,21 @@
 //Uncomment to run the hybrid algorithm
 #define USEHYBRID
 
+//Uncomment to run the HLS version of the KF if using the Hybrid (instead of the C++ KF).
+//(Please also follow the instructions in L1Trigger/TrackFindingTMTT/README_HLS.txt).
+//#define USE_HLS
+
 static unsigned int nHelixPar = 5; // 4 or 5 param helix fit.
 
 static bool doKF=true; //true if using KF (and USEHYBRID uncommented)
 static bool printDebugKF=false; // if true print lots of debugging statements related to the KF fit
 
+
 static bool hourglass=true;
+static bool hourglassExtended=true;
 
 //Gemetry extensions
-static std::string geomext=hourglass?"hourglass":"new";  
+static std::string geomext=hourglass?(hourglassExtended?"hourglassExtended":"hourglass"):"new";  
 
 static int TMUX = 6;
 
@@ -37,9 +43,6 @@ static bool writeHLSInvTable=false; //Write out tables of drinv and invt in trac
 
 static bool writeFitDerTable=false; //Write out track derivative tables
 
-static int nbitsd0=13;
-static double kd0 = 2*10./(1<<nbitsd0);
-
 
 static bool writeDTCLinks=false;
 static bool writeIL=false;
@@ -49,7 +52,10 @@ static bool writeAllStubs=false;
 static bool writeVMOccupancyME=false;
 static bool writeVMOccupancyTE=false;
 static bool writeTE=false;
+static bool writeTED=false;
+static bool writeTRE=false;
 static bool writeTrackletCalculator=false;
+static bool writeTrackletCalculatorDisplaced=false;
 static bool writeTrackletPars=false;
 static bool writeAllProjections=false;
 static bool writeVMProjections=false;
@@ -77,8 +83,8 @@ static bool writeTrackletParsDisk=false;
 static bool writeAllCT=false; //write out .dat file containing all output tracks in bitwise format
 
 static bool writeVariance=false; //write out residuals for variand matrix determination
-static bool writeResEff=false; //write files for making resolution & efficiency plots for standable code version
-static bool writePars=false; //write files for making plots of track parameters
+static bool writeResEff=true; //write files for making resolution & efficiency plots for standable code version
+static bool writePars=true; //write files for making plots of track parameters
 static bool writeMatchEff=false; //write files for making plots with truth matched efficiency
 
 
@@ -104,7 +110,6 @@ static unsigned int writememsect=3;  //writemem only for this sector
 
 static bool warnNoMem=false;  //If true will print out warnings about missing projection memories
 
-
 //Program flow (should be true for normal operation)
 //enables the stub finding in these layer/disk combinations
 static bool doL1L2=true;
@@ -117,6 +122,11 @@ static bool doD3D4=true;
 
 static bool doL1D1=true;
 static bool doL2D1=true;
+
+static bool doL3L4L2=true; // only run if hourglassExtended is true
+static bool doL5L6L4=true; // only run if hourglassExtended is true
+static bool doL2L3D1=true; // only run if hourglassExtended is true
+static bool doD1D2L2=true; // only run if hourglassExtended is true
 
 static bool allSector=false; //if true duplicate stubs in all sectors
 
@@ -158,6 +168,7 @@ static double rmaxdiskvm=67.0;
 
 static double rmaxdiskl1overlapvm=45.0;
 static double rmindiskl2overlapvm=40.0;
+static double rmindiskl3overlapvm=50.0;
 
 
 // need separate lookup values for inner two vs outer three disks for 2S modules
@@ -190,11 +201,11 @@ static unsigned int nvmtedisks[5]={4,4,4,4,4};
 static unsigned int nallprojdisks[5]={4,4,4,4,4};
 static unsigned int nvmmedisks[5]={8,4,4,4,4};
 //for seeding in L1D1 L2D1
-static unsigned int nallstubsoverlaplayers[2] = {8, 4}; 
-static unsigned int nvmteoverlaplayers[2] = {2, 2};
+static unsigned int nallstubsoverlaplayers[3] = {8, 4, 4}; 
+static unsigned int nvmteoverlaplayers[3] = {2, 2, 2};
 
-static unsigned int nallstubsoverlapdisks[1] = {4}; 
-static unsigned int nvmteoverlapdisks[1] = {4};
+static unsigned int nallstubsoverlapdisks[2] = {4, 4}; 
+static unsigned int nvmteoverlapdisks[2] = {4, 4};
 
 static double rcrit=55.0;
 
@@ -281,6 +292,7 @@ static unsigned int MAXLAYERROUTER = (hourglass?108:54) + MAXOFFSET; //Max stubs
 static unsigned int MAXDISKROUTER = (hourglass?108:54) + MAXOFFSET; //Max stubs handled by disk router
 static unsigned int MAXVMROUTER = (hourglass?108:54) + MAXOFFSET; //Max stubs handled by VM router
 static unsigned int MAXTE = (hourglass?108:54) + MAXOFFSET; //Maximum number of stub pairs to try in TE 
+static unsigned int MAXTRE = (hourglass?108:54) + MAXOFFSET; //Maximum number of stub pairs to try in TRE 
 static unsigned int MAXTC = (hourglass?108:54) + MAXOFFSET; //Maximum number of tracklet parameter calculations
 //static unsigned int MAXPROJECTIONTRANSCEIVER = 10000; //Maximum number of projections to neighbor
 static unsigned int MAXPROJROUTER = (hourglass?108:54) + MAXOFFSET; //Maximum number of projections to route
@@ -311,10 +323,10 @@ static int nbitsphiprojL123=nbitsphistubL123;
 static int nbitsphiprojL456=nbitsphistubL456;
 
 static int nbitszprojL123=12;
-static int nbitszprojL456=8;
+static int nbitszprojL456=hourglassExtended?12:8;
 
-static int nbitsphiprojderL123=hourglass?8+2:8+3;
-static int nbitsphiprojderL456=8+2;
+static int nbitsphiprojderL123=hourglass?(hourglassExtended?16:8+2):8+3;
+static int nbitsphiprojderL456=hourglassExtended?16:8+2;
 
 static int nbitszprojderL123=8+2;
 static int nbitszprojderL456=7+2;
@@ -333,6 +345,7 @@ static int nfinephioverlapouter=2;
 //Bits used to store track parameter in tracklet
 static int nbitsrinv=14;
 static int nbitsphi0=18;
+static int nbitsd0=13;
 static int nbitst=14;
 static int nbitsz0=10;
 
@@ -341,6 +354,7 @@ static double maxrinv=0.006;
 //static double maxphi0=0.59;
 //static double maxt=9.0;
 //static double maxz0=28.0;
+static double maxd0=10.;
 
 static double rmin[6]={rminL1,rminL2,rminL3,rminL4,rminL5,rminL6};
 
@@ -351,6 +365,7 @@ static double kphi1=hourglass?dphisectorHG/(1<<nbitsphistubL456):two_pi/((0.75*N
 static double kz=2*zlength/(1<<nbitszL123);
 //static double kr=2*drmax/(1<<nbitsrL456);
 static double kr=rmaxdisk/(1<<nrbitsdisk);
+static double kd0 = 2*maxd0/(1<<nbitsd0);
 
 //track and tracklet parameters
 const int rinv_shift = -6;  // Krinv = 2^shift * Kphi/Kr
@@ -408,9 +423,9 @@ static int phiderdiskbitshift=20;
 static int rderdiskbitshift=7;
 
 
-static int phiresidbits=12; 
-static int zresidbits=9;
-static int rresidbits=7;
+static int phiresidbits=hourglassExtended?16:12; 
+static int zresidbits=hourglassExtended?16:9;
+static int rresidbits=hourglassExtended?16:7;
 
 //Trackfit
 static int fitrinvbitshift=9;  //6 OK?
@@ -427,8 +442,10 @@ static int chisqzfactbits=14;
 //Duplicate Removal
 static int minIndStubs=3;
 static bool AdjacentRemoval=true;
-static std::string RemovalType="ichi";
+static std::string RemovalType="";
 //"ichi" (pairwise, keep track with best ichisq), "nstub" (pairwise, keep track with more stubs), "grid" (TMTT-like removal), "" (no removal)
+static bool fakefit=true;
+
 
 #endif
 

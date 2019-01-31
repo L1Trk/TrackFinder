@@ -49,12 +49,39 @@ public:
     if (subname=="T") overlap_=true;
     if (hourglass) {
       if (subname=="Z") overlap_=true;
+      if (subname=="x") overlap_=true;
+      if (subname=="y") overlap_=true;
+      if (subname=="z") overlap_=true;
+      if (subname=="w") overlap_=true;
+      if (subname=="q") overlap_=true;
+      if (subname=="r") overlap_=true;
+      if (subname=="s") overlap_=true;
+      if (subname=="t") overlap_=true;
     }
     if (subname=="I") extra_=true;
     if (subname=="J") extra_=true;
     if (subname=="K") extra_=true;
     if (subname=="L") extra_=true;
     
+
+    extended_ = false;
+    if (subname=="a") extended_=true;
+    if (subname=="b") extended_=true;
+    if (subname=="c") extended_=true;
+    if (subname=="d") extended_=true;
+    if (subname=="e") extended_=true;
+    if (subname=="f") extended_=true;
+    if (subname=="g") extended_=true;
+    if (subname=="h") extended_=true;
+    if (subname=="x") extended_=true;
+    if (subname=="y") extended_=true;
+    if (subname=="z") extended_=true;
+    if (subname=="w") extended_=true;
+    if (subname=="q") extended_=true;
+    if (subname=="r") extended_=true;
+    if (subname=="s") extended_=true;
+    if (subname=="t") extended_=true;
+        
     subname=name.substr(12,2);
     phibin_=subname[0]-'0';
     if (subname[1]!='n') {
@@ -63,6 +90,7 @@ public:
 
     unsigned int nbins=8;
     if (layer_>=4) nbins=16;
+    if (disk_==1 && extended_ && overlap_) nbins = 16;
     for (unsigned int i=0;i<nbins;i++){
       vmbendtable_.push_back(true);
     }
@@ -75,14 +103,30 @@ public:
 
     if (extra_ and layer_==2) isinner_ = true;
     if (extra_ and layer_==3) isinner_ = false;
+    // more special cases for triplets
+    if (!overlap_ and extended_ and layer_==2) isinner_ = true;
+    if (!overlap_ and extended_ and layer_==3) isinner_ = false;
+    if ( overlap_ and extended_ and layer_==2) isinner_ = false;
+    if ( overlap_ and extended_ and disk_==1)  isinner_ = false;
     
   }
   
   bool addStub(std::pair<FPGAStub*,L1TStub*> stub) {
+    int mask=-1;
+    if (layer_==1 || layer_==3 || layer_==5 || (extended_ && layer_==2))
+      mask=1023;
 
-    int binlookup=stub.first->getVMBits().value();
-    if (overlap_) {
-      binlookup=stub.first->getVMBitsOverlap().value();
+    int binlookup= -1;
+    if(!extended_){
+      binlookup=stub.first->getVMBits().value()&mask;
+      if (overlap_) {
+	binlookup=stub.first->getVMBitsOverlap().value();
+      }
+    } else{
+      binlookup=stub.first->getVMBitsExtended().value()&mask;
+      if (overlap_) {
+	binlookup=stub.first->getVMBitsOverlapExtended().value()&mask;
+      }
     }
     if (extra_) {
       binlookup=stub.first->getVMBitsExtra().value();
@@ -99,32 +143,58 @@ public:
       if (debug1) cout << getName() << " Stub failed bend cut. bend = "<<FPGAStub::benddecode(stub.first->bend().value(),stub.first->isPSmodule())<<endl;
       return false;
     }
-    
-    if (overlap_) {
+
+    if(!extended_){
+      if (overlap_) {
 	if (disk_==1) {
-          bool negdisk=stub.first->disk().value()<0.0;
+	  bool negdisk=stub.first->disk().value()<0.0;
 	  assert(bin<4);
 	  if (negdisk) bin+=4;
 	  stubsbinned_[bin].push_back(stub);
 	  if (debug1) cout << getName()<<" Stub with lookup = "<<binlookup
 			   <<" in disk = "<<disk_<<"  in bin = "<<bin<<endl;
 	}
-    } else {
-      if (stub.first->isBarrel()){
-	if (!isinner_) {
-	  stubsbinned_[bin].push_back(stub);
-	}
-	
       } else {
+        if (stub.first->isBarrel()){
+          if (!isinner_) {
+	    stubsbinned_[bin].push_back(stub);
+          }
+	
+	} else {
 
-        bool negdisk=stub.first->disk().value()<0.0;
+	  bool negdisk=stub.first->disk().value()<0.0;
 
-	if (disk_%2==0) {
-	  assert(bin<4);
-	  if (negdisk) bin+=4;
+	  if (disk_%2==0) {
+	    assert(bin<4);
+	    if (negdisk) bin+=4;
+	    stubsbinned_[bin].push_back(stub);
+	  }
+		  
+	}
+      }
+    }
+    else {
+      if(!isinner_){
+	if(layer_>0){
 	  stubsbinned_[bin].push_back(stub);
 	}
-        	
+	else{
+	  if(overlap_){
+	    assert(disk_==1); // D1 from L2L3D1
+
+	    //bin 0 is PS, 1 through 3 is 2S
+	    
+	    bin = stub.first->ir(); // 0 to 9
+	    bin = bin >> 2; // 0 to 2
+	    bin += 1;
+	    if(stub.first->isPSmodule())
+	      bin = 0;
+	  }
+	  assert(bin<4);
+	  bool negdisk=stub.first->disk().value()<0.0;
+	  if (negdisk) bin+=4;
+	  stubsbinned_[bin].push_back(stub);	  
+	}
       }
     }
     if (debug1) cout << "Adding stubs to "<<getName()<<endl;
@@ -422,6 +492,7 @@ private:
   FPGAVMStubsTE* other_;
   bool overlap_;
   bool extra_;
+  bool extended_; // for the L2L3->D1 and D1D2->L2
   bool isinner_;  // is inner layer/disk for TE purpose
   double phimin_;
   double phimax_;

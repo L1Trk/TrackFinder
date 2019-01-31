@@ -71,66 +71,101 @@ public:
 
     //to adjust globaly the phi and rz matching cuts
     phifact_=1.0;
-    if (doKF) phifact_=1.0;
     rzfact_=1.0;
 
-    for(unsigned int seedindex=0;seedindex<7;seedindex++){
+    for(unsigned int seedindex=0;seedindex<12;seedindex++){
       phimatchcut_[seedindex]=-1;
       zmatchcut_[seedindex]=-1;
     }
     
     if (layer_==1){
-      phimatchcut_[1]=0.07/(kphi1*rmean[layer_-1]);
-      zmatchcut_[1]=5.5/kz;
-      phimatchcut_[2]=0.08/(kphi1*rmean[layer_-1]);
-      zmatchcut_[2]=15.0/kz;
-      phimatchcut_[3]=0.07/(kphi1*rmean[layer_-1]);
-      zmatchcut_[3]=1.5/kz;
-      phimatchcut_[4]=0.05/(kphi1*rmean[layer_-1]);
-      zmatchcut_[4]=2.0/kz;
-      phimatchcut_[6]=0.05/(kphi1*rmean[layer_-1]);
-      zmatchcut_[6]=1.5/kz;
-      phimatchcut_[7]=0.1/(kphi1*rmean[layer_-1]);
-      zmatchcut_[7]=0.7/kz;
+      phimatchcut_[2]=0.07/(kphi1*rmean[layer_-1]);
+      zmatchcut_[2]=5.5/kz;
+      phimatchcut_[3]=0.08/(kphi1*rmean[layer_-1]);
+      zmatchcut_[3]=15.0/kz;
+      phimatchcut_[4]=0.07/(kphi1*rmean[layer_-1]);
+      zmatchcut_[4]=1.5/kz;
+      phimatchcut_[5]=0.05/(kphi1*rmean[layer_-1]);
+      zmatchcut_[5]=2.0/kz;
+      phimatchcut_[7]=0.05/(kphi1*rmean[layer_-1]);
+      zmatchcut_[7]=1.5/kz;
+      phimatchcut_[1]=0.1/(kphi1*rmean[layer_-1]);
+      zmatchcut_[1]=0.7/kz;
+
+      phimatchcut_[8]=999.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[8]=999.0/kz;
+      phimatchcut_[9]=999.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[9]=999.0/kz;
+      phimatchcut_[10]=999.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[10]=999.0/kz;
+      phimatchcut_[11]=999.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[11]=999.0/kz;
     }
     if (layer_==2){
-      phimatchcut_[1]=0.06/(kphi1*rmean[layer_-1]);
-      zmatchcut_[1]=3.5/kz;
-      phimatchcut_[2]=0.08/(kphi1*rmean[layer_-1]);
-      zmatchcut_[2]=15.0/kz;
-      phimatchcut_[3]=0.05/(kphi1*rmean[layer_-1]);
-      zmatchcut_[3]=1.25/kz;
+      phimatchcut_[2]=0.06/(kphi1*rmean[layer_-1]);
+      zmatchcut_[2]=3.5/kz;
+      phimatchcut_[3]=0.08/(kphi1*rmean[layer_-1]);
+      zmatchcut_[3]=15.0/kz;
+      phimatchcut_[4]=0.05/(kphi1*rmean[layer_-1]);
+      zmatchcut_[4]=1.25/kz;
+
+      phimatchcut_[9]=999.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[9]=999.0/kz;
     }
     if (layer_==3){
       phimatchcut_[0]=0.1/(kphi1*rmean[layer_-1]);
       zmatchcut_[0]=0.7/kz;
-      phimatchcut_[2]=0.08/(kphi1*rmean[layer_-1]);
-      zmatchcut_[2]=9.0/kz;
+      phimatchcut_[3]=0.08/(kphi1*rmean[layer_-1]);
+      zmatchcut_[3]=9.0/kz;
+
+      phimatchcut_[9]=999.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[9]=999.0/kz;
+      phimatchcut_[11]=999.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[11]=999.0/kz;
     }
     if (layer_==4){
       phimatchcut_[0]=0.19/(kphi1*rmean[layer_-1]);
       zmatchcut_[0]=3.0/kz;
-      phimatchcut_[2]=0.05/(kphi1*rmean[layer_-1]);
-      zmatchcut_[2]=7.0/kz;
-      phimatchcut_[7]=0.19/(kphi1*rmean[layer_-1]);
-      zmatchcut_[7]=3.0/kz;
+      phimatchcut_[3]=0.05/(kphi1*rmean[layer_-1]);
+      zmatchcut_[3]=7.0/kz;
+      phimatchcut_[1]=0.19/(kphi1*rmean[layer_-1]);
+      zmatchcut_[1]=3.0/kz;
+
+      phimatchcut_[10]=999.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[10]=999.0/kz;
+      phimatchcut_[11]=999.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[11]=999.0/kz;
     }
     if (layer_==5){
       phimatchcut_[0]=0.4/(kphi1*rmean[layer_-1]);
       zmatchcut_[0]=3.0/kz;
-      phimatchcut_[1]=0.08/(kphi1*rmean[layer_-1]);
-      zmatchcut_[1]=8.0/kz;
-      phimatchcut_[7]=0.4/(kphi1*rmean[layer_-1]);
-      zmatchcut_[7]=3.0/kz;
+      phimatchcut_[2]=0.08/(kphi1*rmean[layer_-1]);
+      zmatchcut_[2]=8.0/kz;
+      phimatchcut_[1]=0.4/(kphi1*rmean[layer_-1]);
+      zmatchcut_[1]=3.0/kz;
+
+      phimatchcut_[8]=999.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[8]=999.0/kz;
+      phimatchcut_[10]=999.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[10]=999.0/kz;
+      phimatchcut_[11]=999.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[11]=999.0/kz;
     }
     if (layer_==6){
       phimatchcut_[0]=0.5/(kphi1*rmean[layer_-1]);
       zmatchcut_[0]=4.0/kz;
-      phimatchcut_[1]=0.19/(kphi1*rmean[layer_-1]);
-      zmatchcut_[1]=9.5/kz;
+      phimatchcut_[2]=0.19/(kphi1*rmean[layer_-1]);
+      zmatchcut_[2]=9.5/kz;
+
+      phimatchcut_[8]=999.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[8]=999.0/kz;
+      phimatchcut_[10]=999.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[10]=999.0/kz;
+      phimatchcut_[11]=999.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[11]=999.0/kz;
     }
 
-    for(int iseedindex=0;iseedindex<7;iseedindex++){
+    for(int iseedindex=0;iseedindex<12;iseedindex++){
       rphicutPS_[iseedindex]=-1.0;
       rphicut2S_[iseedindex]=-1.0;
       rcutPS_[iseedindex]=-1.0;
@@ -143,17 +178,27 @@ public:
       rphicut2S_[0]=0.5;
       rcut2S_[0]=3.8;      
 
-      rphicut2S_[1]=0.8;
+      rphicut2S_[2]=0.8;
+      rcut2S_[2]=3.8;      
+      rphicutPS_[2]=999.0;
+      rcutPS_[2]=999.0;      
+
+      rphicutPS_[5]=0.10;
+      rcutPS_[5]=0.5;
+      
+      rphicutPS_[1]=0.2;
+      rcutPS_[1]=0.5;
+      rphicut2S_[1]=0.5;
       rcut2S_[1]=3.8;      
 
-      rphicutPS_[4]=0.10;
-      rcutPS_[4]=0.5;
-      
-      rphicutPS_[7]=0.2;
-      rcutPS_[7]=0.5;
-      rphicut2S_[7]=0.5;
-      rcut2S_[7]=3.8;      
-
+      rphicutPS_[8]=999.0;
+      rcutPS_[8]=999.0;
+      rphicut2S_[8]=999.0;
+      rcut2S_[8]=999.0;      
+      rphicutPS_[9]=999.0;
+      rcutPS_[9]=999.0;
+      rphicut2S_[9]=999.0;
+      rcut2S_[9]=999.0;      
     }
 
     if (abs(disk_)==2){
@@ -162,29 +207,41 @@ public:
       rphicut2S_[0]=0.5;
       rcut2S_[0]=3.8;      
 
-      rphicut2S_[1]=0.8;
-      rcut2S_[1]=3.8;      
-
-      rphicutPS_[4]=0.10;
-      rcutPS_[4]=0.5;
+      rphicut2S_[2]=0.8;
+      rcut2S_[2]=3.8;      
 
       rphicutPS_[5]=0.10;
       rcutPS_[5]=0.5;
 
-      
-      rphicut2S_[5]=0.5;
-      rcut2S_[5]=3.8;      
-
       rphicutPS_[6]=0.10;
       rcutPS_[6]=0.5;
-      rphicut2S_[6]=0.15;
-      rcut2S_[6]=3.4;      
 
-      rphicutPS_[7]=0.2;
+      
+      rphicut2S_[6]=0.5;
+      rcut2S_[6]=3.8;      
+
+      rphicutPS_[7]=0.10;
       rcutPS_[7]=0.5;
-      rphicut2S_[7]=0.5;
-      rcut2S_[7]=3.8;      
+      rphicut2S_[7]=0.15;
+      rcut2S_[7]=3.4;      
+
+      rphicutPS_[1]=0.2;
+      rcutPS_[1]=0.5;
+      rphicut2S_[1]=0.5;
+      rcut2S_[1]=3.8;      
            
+      rphicutPS_[8]=999.0;
+      rcutPS_[8]=999.0;
+      rphicut2S_[8]=999.0;
+      rcut2S_[8]=999.0;      
+      rphicutPS_[9]=999.0;
+      rcutPS_[9]=999.0;
+      rphicut2S_[9]=999.0;
+      rcut2S_[9]=999.0;      
+      rphicutPS_[10]=999.0;
+      rcutPS_[10]=999.0;
+      rphicut2S_[10]=999.0;
+      rcut2S_[10]=999.0;      
     }
 
     if (abs(disk_)==3){
@@ -194,26 +251,42 @@ public:
       rcut2S_[0]=3.6;      
 
 
-      rphicutPS_[3]=0.15;
-      rcutPS_[3]=0.5;
-      rphicut2S_[3]=0.15;
-      rcut2S_[3]=3.6;      
+      rphicutPS_[4]=0.15;
+      rcutPS_[4]=0.5;
+      rphicut2S_[4]=0.15;
+      rcut2S_[4]=3.6;      
 
-      rphicutPS_[5]=0.2;
-      rcutPS_[5]=0.6;
-      rphicut2S_[5]=0.2;
-      rcut2S_[5]=3.6;
+      rphicutPS_[6]=0.2;
+      rcutPS_[6]=0.6;
+      rphicut2S_[6]=0.2;
+      rcut2S_[6]=3.6;
 
-      rphicutPS_[6]=0.15;
-      rcutPS_[6]=0.8;
-      rphicut2S_[6]=0.25;
-      rcut2S_[6]=3.8;
+      rphicutPS_[7]=0.15;
+      rcutPS_[7]=0.8;
+      rphicut2S_[7]=0.25;
+      rcut2S_[7]=3.8;
 
-      rphicutPS_[7]=0.2;
-      rcutPS_[7]=0.5;
-      rphicut2S_[7]=0.5;
-      rcut2S_[7]=3.8;            
+      rphicutPS_[1]=0.2;
+      rcutPS_[1]=0.5;
+      rphicut2S_[1]=0.5;
+      rcut2S_[1]=3.8;            
       
+      rphicutPS_[8]=999.0;
+      rcutPS_[8]=999.0;
+      rphicut2S_[8]=999.0;
+      rcut2S_[8]=999.0;      
+      rphicutPS_[9]=999.0;
+      rcutPS_[9]=999.0;
+      rphicut2S_[9]=999.0;
+      rcut2S_[9]=999.0;      
+      rphicutPS_[10]=999.0;
+      rcutPS_[10]=999.0;
+      rphicut2S_[10]=999.0;
+      rcut2S_[10]=999.0;      
+      rphicutPS_[11]=999.0;
+      rcutPS_[11]=999.0;
+      rphicut2S_[11]=999.0;
+      rcut2S_[11]=999.0;      
     }
 
 
@@ -224,47 +297,79 @@ public:
       rcut2S_[0]=3.6;      
 
 
-      rphicutPS_[3]=0.2;
-      rcutPS_[3]=0.8;
-      rphicut2S_[3]=0.2;
-      rcut2S_[3]=3.6;      
+      rphicutPS_[4]=0.2;
+      rcutPS_[4]=0.8;
+      rphicut2S_[4]=0.2;
+      rcut2S_[4]=3.6;      
 
-      rphicutPS_[5]=0.3;
-      rcutPS_[5]=1.0;
-      rphicut2S_[5]=0.25;
-      rcut2S_[5]=3.5;      
+      rphicutPS_[6]=0.3;
+      rcutPS_[6]=1.0;
+      rphicut2S_[6]=0.25;
+      rcut2S_[6]=3.5;      
 
-      rphicutPS_[6]=0.5;
-      rcutPS_[6]=1.0;      
-      rphicut2S_[6]=0.5;
-      rcut2S_[6]=3.8;      
-
-      rphicutPS_[7]=0.2;
-      rcutPS_[7]=0.5;
+      rphicutPS_[7]=0.5;
+      rcutPS_[7]=1.0;      
       rphicut2S_[7]=0.5;
-      rcut2S_[7]=3.8;            
+      rcut2S_[7]=3.8;      
+
+      rphicutPS_[1]=0.2;
+      rcutPS_[1]=0.5;
+      rphicut2S_[1]=0.5;
+      rcut2S_[1]=3.8;            
       
+      rphicutPS_[8]=999.0;
+      rcutPS_[8]=999.0;
+      rphicut2S_[8]=999.0;
+      rcut2S_[8]=999.0;      
+      rphicutPS_[9]=999.0;
+      rcutPS_[9]=999.0;
+      rphicut2S_[9]=999.0;
+      rcut2S_[9]=999.0;      
+      rphicutPS_[10]=999.0;
+      rcutPS_[10]=999.0;
+      rphicut2S_[10]=999.0;
+      rcut2S_[10]=999.0;      
+      rphicutPS_[11]=999.0;
+      rcutPS_[11]=999.0;
+      rphicut2S_[11]=999.0;
+      rcut2S_[11]=999.0;      
     }
 
 
 
     if (abs(disk_)==5){
-      rphicutPS_[3]=0.25;
-      rcutPS_[3]=1.0;
-      rphicut2S_[3]=0.4;
-      rcut2S_[3]=3.6;      
+      rphicutPS_[4]=0.25;
+      rcutPS_[4]=1.0;
+      rphicut2S_[4]=0.4;
+      rcut2S_[4]=3.6;      
 
-      rphicutPS_[4]=0.10;
-      rcutPS_[4]=0.5;
-      rphicut2S_[4]=0.2;
-      rcut2S_[4]=3.4;      
+      rphicutPS_[5]=0.10;
+      rcutPS_[5]=0.5;
+      rphicut2S_[5]=0.2;
+      rcut2S_[5]=3.4;      
 
-      rphicutPS_[5]=0.5;
-      rcutPS_[5]=2.0;
-      rphicut2S_[5]=0.4;
-      rcut2S_[5]=3.7;      
+      rphicutPS_[6]=0.5;
+      rcutPS_[6]=2.0;
+      rphicut2S_[6]=0.4;
+      rcut2S_[6]=3.7;      
 
 
+      rphicutPS_[8]=999.0;
+      rcutPS_[8]=999.0;
+      rphicut2S_[8]=999.0;
+      rcut2S_[8]=999.0;      
+      rphicutPS_[9]=999.0;
+      rcutPS_[9]=999.0;
+      rphicut2S_[9]=999.0;
+      rcut2S_[9]=999.0;      
+      rphicutPS_[10]=999.0;
+      rcutPS_[10]=999.0;
+      rphicut2S_[10]=999.0;
+      rcut2S_[10]=999.0;      
+      rphicutPS_[11]=999.0;
+      rcutPS_[11]=999.0;
+      rphicut2S_[11]=999.0;
+      rcut2S_[11]=999.0;      
     }
 
     
@@ -282,7 +387,8 @@ public:
 	output=="matchout5"||
 	output=="matchout6"||
 	output=="matchout7"||
-	output=="matchout8"
+	output=="matchout8"||
+	output=="matchout9"
 	){
       FPGAFullMatch* tmp=dynamic_cast<FPGAFullMatch*>(memory);
       assert(tmp!=0);
@@ -457,23 +563,13 @@ public:
 	double dzapprox=z-(tracklet->zprojapprox(layer_)+
 				   dr*tracklet->zprojderapprox(layer_));
 	
-	//if (layer_<3) {
-	//  cout << "dz: "<<layer_<<" "<<tracklet->zproj(layer_)-
-	//    tracklet->zprojapprox(layer_)<<endl;
-	//}
+       //if (layer_<3) {
+       //  cout << "dz: "<<layer_<<" "<<tracklet->zproj(layer_)-
+       //    tracklet->zprojapprox(layer_)<<endl;
+       //}
 
+	int seedindex=tracklet->getISeed();
 	
-	int seedindex=-1;
-
-	if (seedlayer==1&&seeddisk==0) seedindex=0;  //L1L2
-	if (seedlayer==3&&seeddisk==0) seedindex=1;  //L3L4
-	if (seedlayer==5&&seeddisk==0) seedindex=2;  //L5L6
-	if (seedlayer==0&&abs(seeddisk)==1) seedindex=3;  //D1D2
-	if (seedlayer==0&&abs(seeddisk)==3) seedindex=4;  //D3D4
-	if (seedlayer==1&&abs(seeddisk)==1) seedindex=5;  //L1D1
-	if (seedlayer==2&&abs(seeddisk)==1) seedindex=6;  //L2D1
-	if (seedlayer==2&&seeddisk==0) seedindex=7;  //L2L3
-
 	if (seedindex<0) {
 	  cout << "seedlayer abs(seeddisk) : "<<seedlayer<<" "<<abs(seeddisk)<<endl;
 	  assert(0);
@@ -546,20 +642,42 @@ public:
 	      if (hourglass) {
 		int layer=tracklet->layer();
 		int disk=abs(tracklet->disk());
-		if ((layer==1&&disk==0&&fullmatches_[l]->getName().substr(3,4)=="L1L2")||
-		    (layer==2&&disk==0&&fullmatches_[l]->getName().substr(3,4)=="L2L3")||
-		    (layer==3&&disk==0&&fullmatches_[l]->getName().substr(3,4)=="L3L4")||
-		    (layer==5&&disk==0&&fullmatches_[l]->getName().substr(3,4)=="L5L6")||
-		    (layer==0&&disk==1&&fullmatches_[l]->getName().substr(3,4)=="D1D2")||
-		    (layer==0&&disk==3&&fullmatches_[l]->getName().substr(3,4)=="D3D4")||
-		    (layer==1&&disk==1&&fullmatches_[l]->getName().substr(3,4)=="L1D1")||
-		    (layer==2&&disk==1&&fullmatches_[l]->getName().substr(3,4)=="L2D1")){
-		  assert(tracklet->homeSector()==iSector_);
-		  if (debug1) {
-		    cout << getName()<<" adding match to "<<fullmatches_[l]->getName()<<endl;
-		  }
-		  fullmatches_[l]->addMatch(tracklet,tmp);
-		} 
+                if (!hourglassExtended) {
+                  if ((layer==1&&disk==0&&fullmatches_[l]->getName().substr(3,4)=="L1L2")||
+                      (layer==2&&disk==0&&fullmatches_[l]->getName().substr(3,4)=="L2L3")||
+                      (layer==3&&disk==0&&fullmatches_[l]->getName().substr(3,4)=="L3L4")||
+                      (layer==5&&disk==0&&fullmatches_[l]->getName().substr(3,4)=="L5L6")||
+                      (layer==0&&disk==1&&fullmatches_[l]->getName().substr(3,4)=="D1D2")||
+                      (layer==0&&disk==3&&fullmatches_[l]->getName().substr(3,4)=="D3D4")||
+                      (layer==1&&disk==1&&fullmatches_[l]->getName().substr(3,4)=="L1D1")||
+                      (layer==2&&disk==1&&fullmatches_[l]->getName().substr(3,4)=="L2D1")){
+                    assert(tracklet->homeSector()==iSector_);
+                    if (debug1) {
+                      cout << getName()<<" adding match to "<<fullmatches_[l]->getName()<<endl;
+                    }
+                    fullmatches_[l]->addMatch(tracklet,tmp);
+                  } 
+                }
+                else {
+                  int iSeed = tracklet->getISeed ();
+                  if ((iSeed==0&&fullmatches_[l]->getName().substr(3,6)=="L1L2XX")||
+                      (iSeed==1&&fullmatches_[l]->getName().substr(3,6)=="L3L4XX")||
+                      (iSeed==2&&fullmatches_[l]->getName().substr(3,6)=="L5L6XX")||
+                      (iSeed==3&&fullmatches_[l]->getName().substr(3,6)=="D1D2XX")||
+                      (iSeed==4&&fullmatches_[l]->getName().substr(3,6)=="D3D4XX")||
+                      (iSeed==5&&fullmatches_[l]->getName().substr(3,6)=="L1D1XX")||
+                      (iSeed==6&&fullmatches_[l]->getName().substr(3,6)=="L2D1XX")||
+                      (iSeed==7&&fullmatches_[l]->getName().substr(3,6)=="L3L4L2")||
+                      (iSeed==8&&fullmatches_[l]->getName().substr(3,6)=="L5L6L4")||
+                      (iSeed==9&&fullmatches_[l]->getName().substr(3,6)=="L2L3D1")||
+                      (iSeed==10&&fullmatches_[l]->getName().substr(3,6)=="D1D2L2")){
+                    assert(tracklet->homeSector()==iSector_);
+                    if (debug1) {
+                      cout << getName()<<" adding match to "<<fullmatches_[l]->getName()<<endl;
+                    }
+                    fullmatches_[l]->addMatch(tracklet,tmp);
+                  } 
+                }
 	      } else {
 		if ((tracklet->layer()==1&&fullmatches_[l]->getName().substr(3,2)=="L1")||
 		    (tracklet->layer()==3&&fullmatches_[l]->getName().substr(3,2)=="L3")||
@@ -700,7 +818,7 @@ public:
 	  
 	  double alphanew=stub->alphanew();
 	  drphi+=dr*alphanew*4.57/stub->r();
-	  drphiapprox+=dr*alphanew*4.57/stub->r();
+	  drphiapprox+=drapprox*alphanew*4.57/stub->r();
 
 	  
 	  int ialphanew=fpgastub->alphanew().value();
@@ -719,16 +837,7 @@ public:
 	int seedlayer=tracklet->layer();
 	int seeddisk=tracklet->disk();
 
-	int seedindex=-1;
-
-	if (seedlayer==1&&seeddisk==0) seedindex=0;  //L1L2
-	if (seedlayer==3&&seeddisk==0) seedindex=1;  //L3L4
-	if (seedlayer==5&&seeddisk==0) seedindex=2;  //L5L6
-	if (seedlayer==0&&abs(seeddisk)==1) seedindex=3;  //D1D2
-	if (seedlayer==0&&abs(seeddisk)==3) seedindex=4;  //D3D4
-	if (seedlayer==1&&abs(seeddisk)==1) seedindex=5;  //L1D1
-	if (seedlayer==2&&abs(seeddisk)==1) seedindex=6;  //L2D1
-	if (seedlayer==2&&seeddisk==0) seedindex=7;  //L2L3
+	int seedindex=tracklet->getISeed();
 
 	if (seedindex<0) {
 	  cout << "seedlayer abs(seeddisk) : "<<seedlayer<<" "<<abs(seeddisk)<<endl;
@@ -741,7 +850,6 @@ public:
 	  drphicut=rphicut2S_[seedindex];
 	  drcut=rcut2S_[seedindex]; 
 	}
-	
 
 	if (drphicut<0.0 || drcut<0.0) {
 	  cout << "drphicut drcut : "<<drphicut<<" "<<drcut<<endl;
@@ -768,6 +876,7 @@ public:
 	bool match=(fabs(drphi)<drphicut)&&(fabs(deltar)<drcut);
 	
 	bool imatch=(fabs(ideltaphi*irstub)<phifact_*drphicut/(kphiproj123*kr))&&(fabs(ideltar)<rzfact_*drcut/krprojshiftdisk);
+
 
 	if (debug1) {
 	  cout << "imatch match disk: "<<imatch<<" "<<match<<" "
@@ -803,9 +912,12 @@ public:
 	    cout << "FPGAMatchCalculator found match in disk "<<getName()<<endl;
 	  }
 
-
-	  assert(fabs(dphi)<0.2);
-	  assert(fabs(dphiapprox)<0.2);
+          if(fabs(dphi)>=0.2){
+            cout<<"dphi "<<dphi<<"\n";
+            cout<<"Seed / ISeed "<<tracklet->seed()<<" "<<tracklet->getISeed()<<"\n";
+          }
+          assert(fabs(dphi)<0.25);
+          assert(fabs(dphiapprox)<0.2);
 
 	  tracklet->addMatchDisk(disk,ideltaphi,ideltar,
 				 drphi/stub->r(),dr,drphiapprox/stub->r(),drapprox,
@@ -840,20 +952,42 @@ public:
 	      if (hourglass) {
 		int layer=tracklet->layer();
 		int disk=abs(tracklet->disk());
-		if ((layer==1&&disk==0&&fullmatches_[l]->getName().substr(3,4)=="L1L2")||
-		    (layer==3&&disk==0&&fullmatches_[l]->getName().substr(3,4)=="L3L4")||
-		    (layer==5&&disk==0&&fullmatches_[l]->getName().substr(3,4)=="L5L6")||
-		    (layer==0&&disk==1&&fullmatches_[l]->getName().substr(3,4)=="D1D2")||
-		    (layer==0&&disk==3&&fullmatches_[l]->getName().substr(3,4)=="D3D4")||
-		    (layer==1&&disk==1&&fullmatches_[l]->getName().substr(3,4)=="L1D1")||
-		    (layer==2&&disk==1&&fullmatches_[l]->getName().substr(3,4)=="L2D1")||
-		    (layer==2&&disk==0&&fullmatches_[l]->getName().substr(3,4)=="L2L3")){
-		  assert(tracklet->homeSector()==iSector_);
-		  if (debug1) {
-		    cout << getName()<<" adding match to "<<fullmatches_[l]->getName()<<endl;
-		  }
-		  fullmatches_[l]->addMatch(tracklet,tmp);
-		}
+                if (!hourglassExtended) {
+                  if ((layer==1&&disk==0&&fullmatches_[l]->getName().substr(3,4)=="L1L2")||
+                      (layer==3&&disk==0&&fullmatches_[l]->getName().substr(3,4)=="L3L4")||
+                      (layer==5&&disk==0&&fullmatches_[l]->getName().substr(3,4)=="L5L6")||
+                      (layer==0&&disk==1&&fullmatches_[l]->getName().substr(3,4)=="D1D2")||
+                      (layer==0&&disk==3&&fullmatches_[l]->getName().substr(3,4)=="D3D4")||
+                      (layer==1&&disk==1&&fullmatches_[l]->getName().substr(3,4)=="L1D1")||
+                      (layer==2&&disk==1&&fullmatches_[l]->getName().substr(3,4)=="L2D1")||
+                      (layer==2&&disk==0&&fullmatches_[l]->getName().substr(3,4)=="L2L3")){
+                    assert(tracklet->homeSector()==iSector_);
+                    if (debug1) {
+                      cout << getName()<<" adding match to "<<fullmatches_[l]->getName()<<endl;
+                    }
+                    fullmatches_[l]->addMatch(tracklet,tmp);
+                  }
+                }
+                else {
+                  int iSeed = tracklet->getISeed ();
+                  if ((iSeed==0&&fullmatches_[l]->getName().substr(3,6)=="L1L2XX")||
+                      (iSeed==1&&fullmatches_[l]->getName().substr(3,6)=="L3L4XX")||
+                      (iSeed==2&&fullmatches_[l]->getName().substr(3,6)=="L5L6XX")||
+                      (iSeed==3&&fullmatches_[l]->getName().substr(3,6)=="D1D2XX")||
+                      (iSeed==4&&fullmatches_[l]->getName().substr(3,6)=="D3D4XX")||
+                      (iSeed==5&&fullmatches_[l]->getName().substr(3,6)=="L1D1XX")||
+                      (iSeed==6&&fullmatches_[l]->getName().substr(3,6)=="L2D1XX")||
+                      (iSeed==7&&fullmatches_[l]->getName().substr(3,6)=="L3L4L2")||
+                      (iSeed==8&&fullmatches_[l]->getName().substr(3,6)=="L5L6L4")||
+                      (iSeed==9&&fullmatches_[l]->getName().substr(3,6)=="L2L3D1")||
+                      (iSeed==10&&fullmatches_[l]->getName().substr(3,6)=="D1D2L2")){
+                    assert(tracklet->homeSector()==iSector_);
+                    if (debug1) {
+                      cout << getName()<<" adding match to "<<fullmatches_[l]->getName()<<endl;
+                    }
+                    fullmatches_[l]->addMatch(tracklet,tmp);
+                  }
+                }
 	      } else {
 		if (((abs(tracklet->disk())==1&&tracklet->layer()==1)&&(fullmatches_[l]->getName().substr(3,4)=="D1L1"||fullmatches_[l]->getName().substr(3,4)=="L1D1"))||
 		    (tracklet->layer()==2&&(fullmatches_[l]->getName().substr(3,4)=="D1L2"||fullmatches_[l]->getName().substr(3,4)=="L2D1"))||    //dangerous to check only layer!!!
@@ -1017,16 +1151,16 @@ private:
   int icorrshift_;
   int icorzshift_;
   int phi0shift_;
-  int phimatchcut_[8];
-  int zmatchcut_[8];
+  int phimatchcut_[12];
+  int zmatchcut_[12];
   double phimin_;
   double phimax_;
   double phioffset_;
 
-  double rphicutPS_[8];
-  double rphicut2S_[8];
-  double rcutPS_[8];
-  double rcut2S_[8];
+  double rphicutPS_[12];
+  double rphicut2S_[12];
+  double rcutPS_[12];
+  double rcut2S_[12];
 
   double phifact_;
   double rzfact_;

@@ -28,7 +28,8 @@ public:
         output=="trackout7"||
         output=="trackout8"||
         output=="trackout9"||
-        output=="trackout10"){
+        output=="trackout10"||
+        output=="trackout11"){
     FPGACleanTrack* tmp=dynamic_cast<FPGACleanTrack*>(memory);
     assert(tmp!=0);
     outputtracklets_.push_back(tmp);
@@ -52,7 +53,8 @@ public:
         input=="trackin7"||
         input=="trackin8"||
         input=="trackin9"||
-        input=="trackin10"){
+        input=="trackin10"||
+        input=="trackin11"){
         FPGATrackFit* tmp=dynamic_cast<FPGATrackFit*>(memory);
         assert(tmp!=0);
         inputtracklets_.push_back(tmp);

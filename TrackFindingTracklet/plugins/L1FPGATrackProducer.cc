@@ -807,7 +807,10 @@ void L1FPGATrackProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSe
   FPGATimer addStubTimer;
   FPGATimer VMRouterTimer;  
   FPGATimer TETimer;
+  FPGATimer TEDTimer;
+  FPGATimer TRETimer;
   FPGATimer TCTimer;
+  FPGATimer TCDTimer;
   FPGATimer PTTimer;
   FPGATimer PRTimer;
   FPGATimer METimer;

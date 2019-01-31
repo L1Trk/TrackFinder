@@ -16,22 +16,34 @@ class FPGATETableInner:public FPGATETableBase{
 public:
 
   FPGATETableInner() {
-    nbits_ = 10;
+    nbits_ = 20;
   }
 
   ~FPGATETableInner() {
 
   }
 
-
   void init(int layer1,
 	    int layer2,
 	    int zbits,
 	    int rbits
 	    ) {
+    init(layer1, layer2, -1, zbits, rbits);
+  }
+
+  void init(int layer1,
+	    int layer2,
+	    int layer3,
+	    int zbits,
+	    int rbits,
+            bool thirdLayerIsDisk = false
+	    ) {
+
+    thirdLayerIsDisk_ = thirdLayerIsDisk;
 
     layer1_=layer1;
     layer2_=layer2;
+    layer3_=layer3;
     zbits_=zbits;
     rbits_=rbits;
 
@@ -47,7 +59,25 @@ public:
     zminl2_=zlength;
     dz_=2*zlength/zbins_;
 
+    if (layer1==1){
+      rmindisk_=rmindiskvm;
+      rmaxdisk_=rmaxdiskl1overlapvm;
+    }
+
+    if (layer1==2){
+      rmindisk_=rmindiskl2overlapvm;
+      rmaxdisk_=rmaxdiskvm;
+    }
+
     rmeanl2_=rmean[layer2-1];
+    if (layer3_>0) {
+      rmeanl3_=rmean[layer3-1];
+      zmeand3_=zmean[layer3-1];
+    }
+    else {
+      rmeanl3_=0.;
+      zmeand3_=0.;
+    }
 
     for (int izbin=0;izbin<zbins_;izbin++) {
       for (int irbin=0;irbin<rbins_;irbin++) {
@@ -80,18 +110,34 @@ public:
     double zmaxl2=-2*zlength;
     double zminl2=2*zlength;
 
-    findz(z1,r1,zminl2,zmaxl2);
-    findz(z1,r2,zminl2,zmaxl2);
-    findz(z2,r1,zminl2,zmaxl2);
-    findz(z2,r2,zminl2,zmaxl2);
+    findzL2(z1,r1,zminl2,zmaxl2);
+    findzL2(z1,r2,zminl2,zmaxl2);
+    findzL2(z2,r1,zminl2,zmaxl2);
+    findzL2(z2,r2,zminl2,zmaxl2);
 
     assert(zminl2<zmaxl2);
 
     if (zminl2>zlength) return -1;
     if (zmaxl2<-zlength) return -1;
 
+    double zmaxl3=-2*zlength;
+    double zminl3=2*zlength;
+
+    findzL3(z1,r1,zminl3,zmaxl3);
+    findzL3(z1,r2,zminl3,zmaxl3);
+    findzL3(z2,r1,zminl3,zmaxl3);
+    findzL3(z2,r2,zminl3,zmaxl3);
+
+    assert(zminl3<zmaxl3);
+
+    if (zminl3>zlength && layer3_>0) return -1;
+    if (zmaxl3<-zlength && layer3_>0) return -1;
+
+
     int NBINS=NLONGVMBINS*NLONGVMBINS;
     
+    // first pack zbinmin and deltaz for second layer
+
     int zbinmin=NBINS*(zminl2+zlength)/(2*zlength);
     int zbinmax=NBINS*(zmaxl2+zlength)/(2*zlength);
 
@@ -104,43 +150,192 @@ public:
     assert(zbinmin<=zbinmax);
     assert(zbinmax-zbinmin<=(int)NLONGVMBINS);
 
-    int value=zbinmin/8;
-    value*=2;
-    if (zbinmax/8-zbinmin/8>0) value+=1;
-    value*=8;
-    value+=(zbinmin&7);
-    //cout << "zbinmax/8 zbinmin/8 value "<<zbinmax/8<<" "<<zbinmin/8<<" "<<value<<endl;
-    assert(value/8<15);
+    int valueL2=zbinmin/8;
+    valueL2*=2;
+    if (zbinmax/8-zbinmin/8>0) valueL2+=1;
+    valueL2*=8;
+    valueL2+=(zbinmin&7);
+    //cout << "zbinmax/8 zbinmin/8 valueL2 "<<zbinmax/8<<" "<<zbinmin/8<<" "<<valueL2<<endl;
+    assert(valueL2/8<15);
     int deltaz=zbinmax-zbinmin;
     if (deltaz>7) {
       //cout << "deltaz = "<<deltaz<<endl;
       deltaz=7;
     }
     assert(deltaz<8);
-    value+=(deltaz<<7);
+    valueL2+=(deltaz<<7);
+
+    // then pack zbinmin and deltaz for third layer
+
+    zbinmin=NBINS*(zminl3+zlength)/(2*zlength);
+    zbinmax=NBINS*(zmaxl3+zlength)/(2*zlength);
+
+    //cout << "zbinmin zminl2 "<<zbinmin<<" "<<zminl2<<endl;
+    //cout << "zbinmax zmaxl2 "<<zbinmax<<" "<<zmaxl2<<endl;
+    
+    if (zbinmin<0) zbinmin=0;
+    if (zbinmax>=NBINS) zbinmax=NBINS-1;
+
+    assert(zbinmin<=zbinmax);
+    assert(zbinmax-zbinmin<=(int)NLONGVMBINS);
+
+    int valueL3=zbinmin/8;
+    valueL3*=2;
+    if (zbinmax/8-zbinmin/8>0) valueL3+=1;
+    valueL3*=8;
+    valueL3+=(zbinmin&7);
+    //cout << "zbinmax/8 zbinmin/8 valueL3 "<<zbinmax/8<<" "<<zbinmin/8<<" "<<valueL3<<endl;
+    assert(valueL3/8<15);
+    deltaz=zbinmax-zbinmin;
+    if (deltaz>7) {
+      //cout << "deltaz = "<<deltaz<<endl;
+      deltaz=7;
+    }
+    assert(deltaz<8);
+    valueL3+=(deltaz<<7);
+
+
+    int valueD3 = 0;
+    if (thirdLayerIsDisk_) {
+
+      if (fabs(z1)<=z0cut) return -1;
+      if (fabs(z2)<=z0cut) return -1;
+
+      double rmaxd3=-2*rmaxdisk;
+      double rmind3=2*rmaxdisk;
+
+      findr(r1,z1,rmind3,rmaxd3);
+      findr(r1,z2,rmind3,rmaxd3);
+      findr(r2,z1,rmind3,rmaxd3);
+      findr(r2,z2,rmind3,rmaxd3);
+
+      assert(rmind3<rmaxd3);
+
+      if (rmind3>rmaxdisk_) return -1;
+      if (rmind3<rmindisk_) rmind3=rmindisk_;
+      if (rmaxd3>rmaxdisk_) rmaxd3=rmaxdisk_;
+      if (rmaxd3<rmindisk_) return -1;
+
+      int NBINS=NLONGVMBINS*NLONGVMBINS/2; //divide by two for + and - z
+      
+      int rbinmin=NBINS*(rmind3-rmindiskvm)/(rmaxdisk-rmindiskvm);
+      int rbinmax=NBINS*(rmaxd3-rmindiskvm)/(rmaxdisk-rmindiskvm);
+
+      if (rmind3 < routerPSdisk)
+        rbinmin = 0;
+      if (rmaxd3 < routerPSdisk)
+        rbinmax = 0;
+
+      //cout << "zbinmin zminl2 "<<zbinmin<<" "<<zminl2<<endl;
+      //cout << "zbinmax zmaxl2 "<<zbinmax<<" "<<zmaxl2<<endl;
+      
+      if (rbinmin<0) rbinmin=0;
+      if (rbinmax>=NBINS) rbinmax=NBINS-1;
+
+      assert(rbinmin<=rbinmax);
+      //assert(rbinmax-rbinmin<=(int)NLONGVMBINS);
+
+      valueD3=rbinmin/8;
+      if (z1<0) valueD3+=4;
+      valueD3*=2;
+      if (rbinmax/8-rbinmin/8>0) valueD3+=1;
+      valueD3*=8;
+      valueD3+=(rbinmin&7);
+      //cout << "zbinmax/8 zbinmin/8 valueD3 "<<zbinmax/8<<" "<<zbinmin/8<<" "<<valueD3<<endl;
+      assert(valueD3/8<15);
+      int deltar=rbinmax-rbinmin;
+      if (deltar>7) {
+        //cout << "deltar = "<<deltar<<endl;
+        deltar=7;
+      }
+      assert(deltar<8);
+      valueD3+=(deltar<<7);
+      assert(valueD3<(1<<10));
+    }
+
+    // mask out the values for third layer if this is not a table for a triplet seed
+    if (layer3_<=0) {
+      valueL3=0;
+      valueD3=0;
+    }
+
+    // finally pack values for second and third layer together
+
+    int value = (valueL3<<10) + valueL2;
+    if (thirdLayerIsDisk_)
+      value = (valueD3<<10) + valueL2;
+
     return value;
     
   }
 
 
-  void findz(double z, double r, double& zminl2, double& zmaxl2){
+  void findzL2(double z, double r, double& zminl2, double& zmaxl2){
 
-    double zl2=zintercept(z0cut,z,r);
+    double zl2=zinterceptL2(z0cut,z,r);
 
     if (zl2<zminl2) zminl2=zl2;
     if (zl2>zmaxl2) zmaxl2=zl2;
     
-    zl2=zintercept(-z0cut,z,r);
+    zl2=zinterceptL2(-z0cut,z,r);
 
     if (zl2<zminl2) zminl2=zl2;
     if (zl2>zmaxl2) zmaxl2=zl2;
 
   }
 
-  double zintercept(double zcut, double z, double r) {
+  double zinterceptL2(double zcut, double z, double r) {
 
     return zcut+(z-zcut)*rmeanl2_/r;
 
+  }
+
+  void findzL3(double z, double r, double& zminl3, double& zmaxl3){
+
+    double zl3=zinterceptL3(z0cut,z,r);
+
+    if (zl3<zminl3) zminl3=zl3;
+    if (zl3>zmaxl3) zmaxl3=zl3;
+    
+    zl3=zinterceptL3(-z0cut,z,r);
+
+    if (zl3<zminl3) zminl3=zl3;
+    if (zl3>zmaxl3) zmaxl3=zl3;
+
+  }
+
+  double zinterceptL3(double zcut, double z, double r) {
+
+    return zcut+(z-zcut)*rmeanl3_/r;
+
+  }
+
+  void findr(double r, double z, double& rmind2, double& rmaxd2){
+
+    double rd2=rintercept(z0cut,r,z);
+
+    //cout << "rd2 : "<<r<<" "<<z<<" "<<rd2<<endl;
+    
+    if (rd2<rmind2) rmind2=rd2;
+    if (rd2>rmaxd2) rmaxd2=rd2;
+    
+    rd2=rintercept(-z0cut,r,z);
+
+    //cout << "rd2 : "<<rd2<<endl;
+
+    if (rd2<rmind2) rmind2=rd2;
+    if (rd2>rmaxd2) rmaxd2=rd2;
+
+  }
+
+  double rintercept(double zcut, double r, double z) {
+
+    //cout << "zcut z "<<zcut<<" "<<z<<endl;
+
+    double zmean=(z>0.0)?zmeand3_:-zmeand3_;
+    
+    return (zmean-zcut)*r/(z-zcut);
+    
   }
 
   int lookup(int zbin, int rbin) {
@@ -153,9 +348,11 @@ public:
 
 private:
 
+  bool thirdLayerIsDisk_;
 
   int layer1_;
   int layer2_;
+  int layer3_;
   int zbits_;
   int rbits_;
   
@@ -170,8 +367,11 @@ private:
   double dz_;
   
   double rmeanl2_;
+  double rmeanl3_;
+  double zmeand3_;
   
-
+  double rmaxdisk_;
+  double rmindisk_;
   
 };
 

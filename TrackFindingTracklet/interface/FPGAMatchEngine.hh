@@ -150,7 +150,7 @@ public:
 	      int ifinephiproj=(projphi.value()>>(projphi.nbits()-8));
 	      int ifinephistubcorr=(stubphicorr.value()>>(stubphicorr.nbits()-8));
 	      
-	      if (abs(ifinephiproj-ifinephistubcorr)>1) {
+	      if (!hourglassExtended && abs(ifinephiproj-ifinephistubcorr)>1) {
 		continue;
 	      }
 	    }
@@ -173,7 +173,7 @@ public:
 	      //   <<stub.first->z().value()<<" "
 	      //   <<((stub.first->z().value()>>(stub.first->z().nbits()-6))&7)
 	      //   <<" "<<z<<endl;
-	      if (abs(idz)>2) {
+	      if (!hourglassExtended && abs(idz)>2) {
 		if (debug1) {
 		  cout << getName()<<" Match rejected for L1L2 seed with dz = "
 		       <<dz<<" idz = "<<idz<<endl;
@@ -181,7 +181,7 @@ public:
 		continue;
 	      }
 	    } else {
-	      if (abs(idz)>5) continue; //needed for L5L6 seeds...
+	      if (!hourglassExtended && abs(idz)>5) continue; //needed for L5L6 seeds...
 	    }
 
 	    int irinvvm=16+(proj->fpgarinv().value()>>(proj->fpgarinv().nbits()-5));
@@ -195,7 +195,7 @@ public:
 	    assert(index<table_.size());
 	    bool pass=table_[index];
 
-	    if (!pass) {
+	    if (!hourglassExtended && !pass) {
 	      if (debug1) {
 		cout << "Match rejected with bend lookup index = "
 		     <<index<<endl; 
@@ -208,6 +208,9 @@ public:
 	    
 	    countpass++;
 	    if (nmatches<1000) {
+              ofstream fout("seeds.txt", ofstream::app);
+              fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << proj->getISeed() << endl;
+              fout.close();
 	      candmatches_->addMatch(proj,stub);
 	    }
 	    nmatches++;
@@ -242,7 +245,7 @@ public:
 	      int ifinephiproj=(projphi.value()>>(projphi.nbits()-8));
 	      int ifinephistubcorr=(stubphicorr.value()>>(stubphicorr.nbits()-8));
 	    
-	      if (abs(ifinephiproj-ifinephistubcorr)>1) {
+	      if (!hourglassExtended && abs(ifinephiproj-ifinephistubcorr)>1) {
 		continue;
 	      }
 	    }
@@ -255,14 +258,14 @@ public:
 	    int idr=r-finer;
 
 	    if (stub.first->isPSmodule()){
-	      if (abs(idr)>1) {
+	      if (!hourglassExtended && abs(idr)>1) {
 		if (debug1) {
 		  cout << getName() << "PS stub rejected with idr = "<<idr<<endl;
 		}
 		continue;
 	      }
 	    } else {
-	      if (abs(idr)>5) {
+	      if (!hourglassExtended && abs(idr)>5) {
 		if (debug1) {
 		  cout << getName() << "2S stub rejected with idr = "<<idr<<endl;
 		}
@@ -289,7 +292,7 @@ public:
 	      pass=table2S_[index];
 	    }
 	    
-	    if (!pass) {
+	    if (!hourglassExtended && !pass) {
 	      if (debug1) {
 		cout << getName() << "stub rejected with index = "<<index<<endl;
 	      }
@@ -303,6 +306,9 @@ public:
 	      if (debug1) {
 		cout << getName() << " adding match "<<endl;
 	      }
+              ofstream fout("seeds.txt", ofstream::app);
+              fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << proj->getISeed() << endl;
+              fout.close();
 	      candmatches_->addMatch(proj,stub);
 	    }
 	    nmatches++;
