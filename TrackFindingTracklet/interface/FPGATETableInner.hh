@@ -24,20 +24,20 @@ public:
   }
 
   void init(int layer1,
-	    int layer2,
-	    int zbits,
-	    int rbits
-	    ) {
+      int layer2,
+      int zbits,
+      int rbits
+      ) {
     init(layer1, layer2, -1, zbits, rbits);
   }
 
   void init(int layer1,
-	    int layer2,
-	    int layer3,
-	    int zbits,
-	    int rbits,
+      int layer2,
+      int layer3,
+      int zbits,
+      int rbits,
             bool thirdLayerIsDisk = false
-	    ) {
+      ) {
 
     thirdLayerIsDisk_ = thirdLayerIsDisk;
 
@@ -47,7 +47,8 @@ public:
     zbits_=zbits;
     rbits_=rbits;
 
-    bool extra=layer1==2&&layer2==3;
+    bool extended=layer1==2&&layer2==3&&layer3_==1&&thirdLayerIsDisk_;
+    bool extra=layer1==2&&layer2==3&&!extended;
     
     rbins_=(1<<rbits);
     rminl1_=rmean[layer1-1]-drmax;
@@ -66,7 +67,7 @@ public:
 
     if (layer1==2){
       rmindisk_=rmindiskl2overlapvm;
-      rmaxdisk_=rmaxdiskvm;
+      rmaxdisk_=(extended?rmaxdisk:rmaxdiskvm);
     }
 
     rmeanl2_=rmean[layer2-1];
@@ -81,10 +82,10 @@ public:
 
     for (int izbin=0;izbin<zbins_;izbin++) {
       for (int irbin=0;irbin<rbins_;irbin++) {
-	//int ibin=irbin+izbin*rbins_;
-	int value=getLookupValue(izbin,irbin,extra);
-	//cout << "table "<<table_.size()<<" "<<value<<" "<<rmeanl2_<<endl;
-	table_.push_back(value);
+  //int ibin=irbin+izbin*rbins_;
+  int value=getLookupValue(izbin,irbin,extra);
+  //cout << "table "<<table_.size()<<" "<<value<<" "<<rmeanl2_<<endl;
+  table_.push_back(value);
       }
     }
 
@@ -130,8 +131,8 @@ public:
 
     assert(zminl3<zmaxl3);
 
-    if (zminl3>zlength && layer3_>0) return -1;
-    if (zmaxl3<-zlength && layer3_>0) return -1;
+    if (zminl3>zlength && layer3_>0 && !thirdLayerIsDisk_) return -1;
+    if (zmaxl3<-zlength && layer3_>0 && !thirdLayerIsDisk_) return -1;
 
 
     int NBINS=NLONGVMBINS*NLONGVMBINS;
@@ -196,7 +197,7 @@ public:
 
 
     int valueD3 = 0;
-    if (thirdLayerIsDisk_) {
+    if (layer3_>0 && thirdLayerIsDisk_) {
 
       if (fabs(z1)<=z0cut) return -1;
       if (fabs(z2)<=z0cut) return -1;
@@ -221,9 +222,9 @@ public:
       int rbinmin=NBINS*(rmind3-rmindiskvm)/(rmaxdisk-rmindiskvm);
       int rbinmax=NBINS*(rmaxd3-rmindiskvm)/(rmaxdisk-rmindiskvm);
 
-      if (rmind3 < routerPSdisk)
+      if (rmind3 < rmaxdiskvm)
         rbinmin = 0;
-      if (rmaxd3 < routerPSdisk)
+      if (rmaxd3 < rmaxdiskvm)
         rbinmax = 0;
 
       //cout << "zbinmin zminl2 "<<zbinmin<<" "<<zminl2<<endl;

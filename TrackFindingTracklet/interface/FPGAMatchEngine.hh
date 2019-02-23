@@ -304,7 +304,7 @@ public:
 	    countpass++;
 	    if (nmatches<1000) {
 	      if (debug1) {
-		cout << getName() << " adding match "<<endl;
+		cout << getName() << " adding match " << stub.first->disk().value()<<" "<< proj->disk()<<endl;
 	      }
               ofstream fout("seeds.txt", ofstream::app);
               fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << proj->getISeed() << endl;

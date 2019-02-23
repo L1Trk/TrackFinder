@@ -17,6 +17,8 @@ public:
     phimin_=phimin;
     phimax_=phimax;
 
+    cout<<"***"<<__FILE__<<":"<<__LINE__<<"*** "<<hourglassExtended<<endl;
+
     string subname=name.substr(11,2);
     if (subname[0]=='_') subname=name.substr(12,2);
     if (hourglassExtended) {
@@ -26,6 +28,8 @@ public:
     
     layer_ = 0;
     disk_  = 0;
+    //cout << name<<" subname = "<<subname<<" "<<endl;
+
     if (subname=="L1") layer_=1;
     if (subname=="L2") layer_=2;
     if (subname=="L3") layer_=3;
@@ -47,6 +51,7 @@ public:
     //if (subname=="B3") disk_=-3;
     //if (subname=="B4") disk_=-4;
     //if (subname=="B5") disk_=-5;
+    //cout << name<<" subname = "<<subname<<" "<<layer_<<" "<<disk_<<endl;
 
     subname=name.substr(11,2);
     if (subname[0]=='_') subname=name.substr(14,2);
@@ -61,6 +66,7 @@ public:
     if (layer_==0&&disk_==0) {
       cout << name<<" subname = "<<subname<<" "<<layer_<<" "<<disk_<<endl;
     }
+    //cout<<"TrackletProjections "<<__LINE__<<" Layer="<<layer_<<" Disk="<<disk_<<" with subname: "<<subname<<endl;
     assert((layer_!=0)||(disk_!=0));
   }
 

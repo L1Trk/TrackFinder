@@ -32,7 +32,7 @@ public:
     assert(projlayer>=1);
     assert(projlayer<=6);
 
-    //cout << "Initiating projection to layer = "<<projlayer<< " at radius = "<<rproj<<endl;
+    if(debug1) cout << "Initiating projection to layer = "<<projlayer<< " at radius = "<<rproj<<endl;
     
     valid_=true;
 

@@ -92,14 +92,14 @@ public:
       phimatchcut_[1]=0.1/(kphi1*rmean[layer_-1]);
       zmatchcut_[1]=0.7/kz;
 
-      phimatchcut_[8]=999.0/(kphi1*rmean[layer_-1]);
-      zmatchcut_[8]=999.0/kz;
-      phimatchcut_[9]=999.0/(kphi1*rmean[layer_-1]);
-      zmatchcut_[9]=999.0/kz;
-      phimatchcut_[10]=999.0/(kphi1*rmean[layer_-1]);
-      zmatchcut_[10]=999.0/kz;
-      phimatchcut_[11]=999.0/(kphi1*rmean[layer_-1]);
-      zmatchcut_[11]=999.0/kz;
+      phimatchcut_[8]=0.08/(kphi1*rmean[layer_-1]);
+      zmatchcut_[8]=1.0/kz;
+      phimatchcut_[9]=0.15/(kphi1*rmean[layer_-1]);
+      zmatchcut_[9]=8.0/kz;
+      phimatchcut_[10]=0.125/(kphi1*rmean[layer_-1]);
+      zmatchcut_[10]=1.0/kz;
+      phimatchcut_[11]=0.15/(kphi1*rmean[layer_-1]);
+      zmatchcut_[11]=1.5/kz;
     }
     if (layer_==2){
       phimatchcut_[2]=0.06/(kphi1*rmean[layer_-1]);
@@ -109,8 +109,8 @@ public:
       phimatchcut_[4]=0.05/(kphi1*rmean[layer_-1]);
       zmatchcut_[4]=1.25/kz;
 
-      phimatchcut_[9]=999.0/(kphi1*rmean[layer_-1]);
-      zmatchcut_[9]=999.0/kz;
+      phimatchcut_[9]=0.1/(kphi1*rmean[layer_-1]);
+      zmatchcut_[9]=7.0/kz;
     }
     if (layer_==3){
       phimatchcut_[0]=0.1/(kphi1*rmean[layer_-1]);
@@ -118,10 +118,10 @@ public:
       phimatchcut_[3]=0.08/(kphi1*rmean[layer_-1]);
       zmatchcut_[3]=9.0/kz;
 
-      phimatchcut_[9]=999.0/(kphi1*rmean[layer_-1]);
-      zmatchcut_[9]=999.0/kz;
-      phimatchcut_[11]=999.0/(kphi1*rmean[layer_-1]);
-      zmatchcut_[11]=999.0/kz;
+      phimatchcut_[9]=0.08/(kphi1*rmean[layer_-1]);
+      zmatchcut_[9]=5.0/kz;
+      phimatchcut_[11]=0.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[11]=0.0/kz;
     }
     if (layer_==4){
       phimatchcut_[0]=0.19/(kphi1*rmean[layer_-1]);
@@ -131,10 +131,10 @@ public:
       phimatchcut_[1]=0.19/(kphi1*rmean[layer_-1]);
       zmatchcut_[1]=3.0/kz;
 
-      phimatchcut_[10]=999.0/(kphi1*rmean[layer_-1]);
-      zmatchcut_[10]=999.0/kz;
-      phimatchcut_[11]=999.0/(kphi1*rmean[layer_-1]);
-      zmatchcut_[11]=999.0/kz;
+      phimatchcut_[10]=0.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[10]=0.0/kz;
+      phimatchcut_[11]=0.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[11]=0.0/kz;
     }
     if (layer_==5){
       phimatchcut_[0]=0.4/(kphi1*rmean[layer_-1]);
@@ -144,12 +144,12 @@ public:
       phimatchcut_[1]=0.4/(kphi1*rmean[layer_-1]);
       zmatchcut_[1]=3.0/kz;
 
-      phimatchcut_[8]=999.0/(kphi1*rmean[layer_-1]);
-      zmatchcut_[8]=999.0/kz;
-      phimatchcut_[10]=999.0/(kphi1*rmean[layer_-1]);
-      zmatchcut_[10]=999.0/kz;
-      phimatchcut_[11]=999.0/(kphi1*rmean[layer_-1]);
-      zmatchcut_[11]=999.0/kz;
+      phimatchcut_[8]=0.08/(kphi1*rmean[layer_-1]);
+      zmatchcut_[8]=4.5/kz;
+      phimatchcut_[10]=0.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[10]=0.0/kz;
+      phimatchcut_[11]=0.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[11]=0.0/kz;
     }
     if (layer_==6){
       phimatchcut_[0]=0.5/(kphi1*rmean[layer_-1]);
@@ -157,12 +157,12 @@ public:
       phimatchcut_[2]=0.19/(kphi1*rmean[layer_-1]);
       zmatchcut_[2]=9.5/kz;
 
-      phimatchcut_[8]=999.0/(kphi1*rmean[layer_-1]);
-      zmatchcut_[8]=999.0/kz;
-      phimatchcut_[10]=999.0/(kphi1*rmean[layer_-1]);
-      zmatchcut_[10]=999.0/kz;
-      phimatchcut_[11]=999.0/(kphi1*rmean[layer_-1]);
-      zmatchcut_[11]=999.0/kz;
+      phimatchcut_[8]=0.2/(kphi1*rmean[layer_-1]);
+      zmatchcut_[8]=4.5/kz;
+      phimatchcut_[10]=0.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[10]=0.0/kz;
+      phimatchcut_[11]=0.0/(kphi1*rmean[layer_-1]);
+      zmatchcut_[11]=0.0/kz;
     }
 
     for(int iseedindex=0;iseedindex<12;iseedindex++){
@@ -191,14 +191,14 @@ public:
       rphicut2S_[1]=0.5;
       rcut2S_[1]=3.8;      
 
-      rphicutPS_[8]=999.0;
-      rcutPS_[8]=999.0;
-      rphicut2S_[8]=999.0;
-      rcut2S_[8]=999.0;      
-      rphicutPS_[9]=999.0;
-      rcutPS_[9]=999.0;
-      rphicut2S_[9]=999.0;
-      rcut2S_[9]=999.0;      
+      rphicutPS_[8]=0.0;
+      rcutPS_[8]=0.0;
+      rphicut2S_[8]=0.20;
+      rcut2S_[8]=3.0;      
+      rphicutPS_[9]=0.0;
+      rcutPS_[9]=0.0;
+      rphicut2S_[9]=0.0;
+      rcut2S_[9]=0.0;      
     }
 
     if (abs(disk_)==2){
@@ -230,18 +230,18 @@ public:
       rphicut2S_[1]=0.5;
       rcut2S_[1]=3.8;      
            
-      rphicutPS_[8]=999.0;
-      rcutPS_[8]=999.0;
-      rphicut2S_[8]=999.0;
-      rcut2S_[8]=999.0;      
-      rphicutPS_[9]=999.0;
-      rcutPS_[9]=999.0;
-      rphicut2S_[9]=999.0;
-      rcut2S_[9]=999.0;      
-      rphicutPS_[10]=999.0;
-      rcutPS_[10]=999.0;
-      rphicut2S_[10]=999.0;
-      rcut2S_[10]=999.0;      
+      rphicutPS_[8]=0.0;
+      rcutPS_[8]=0.0;
+      rphicut2S_[8]=0.30;
+      rcut2S_[8]=3.0;      
+      rphicutPS_[9]=0.0;
+      rcutPS_[9]=0.0;
+      rphicut2S_[9]=0.0;
+      rcut2S_[9]=0.0;      
+      rphicutPS_[10]=0.15;
+      rcutPS_[10]=0.5;
+      rphicut2S_[10]=0.68;
+      rcut2S_[10]=3.0;      
     }
 
     if (abs(disk_)==3){
@@ -271,22 +271,22 @@ public:
       rphicut2S_[1]=0.5;
       rcut2S_[1]=3.8;            
       
-      rphicutPS_[8]=999.0;
-      rcutPS_[8]=999.0;
-      rphicut2S_[8]=999.0;
-      rcut2S_[8]=999.0;      
-      rphicutPS_[9]=999.0;
-      rcutPS_[9]=999.0;
-      rphicut2S_[9]=999.0;
-      rcut2S_[9]=999.0;      
-      rphicutPS_[10]=999.0;
-      rcutPS_[10]=999.0;
-      rphicut2S_[10]=999.0;
-      rcut2S_[10]=999.0;      
-      rphicutPS_[11]=999.0;
-      rcutPS_[11]=999.0;
-      rphicut2S_[11]=999.0;
-      rcut2S_[11]=999.0;      
+      rphicutPS_[8]=0.0;
+      rcutPS_[8]=0.0;
+      rphicut2S_[8]=0.0;
+      rcut2S_[8]=0.0;      
+      rphicutPS_[9]=0.0;
+      rcutPS_[9]=0.0;
+      rphicut2S_[9]=0.0;
+      rcut2S_[9]=0.0;      
+      rphicutPS_[10]=0.0;
+      rcutPS_[10]=0.0;
+      rphicut2S_[10]=0.8;
+      rcut2S_[10]=5.0;      
+      rphicutPS_[11]=0.2;
+      rcutPS_[11]=0.4;
+      rphicut2S_[11]=0.1;
+      rcut2S_[11]=3.0;      
     }
 
 
@@ -317,22 +317,22 @@ public:
       rphicut2S_[1]=0.5;
       rcut2S_[1]=3.8;            
       
-      rphicutPS_[8]=999.0;
-      rcutPS_[8]=999.0;
-      rphicut2S_[8]=999.0;
-      rcut2S_[8]=999.0;      
-      rphicutPS_[9]=999.0;
-      rcutPS_[9]=999.0;
-      rphicut2S_[9]=999.0;
-      rcut2S_[9]=999.0;      
-      rphicutPS_[10]=999.0;
-      rcutPS_[10]=999.0;
-      rphicut2S_[10]=999.0;
-      rcut2S_[10]=999.0;      
-      rphicutPS_[11]=999.0;
-      rcutPS_[11]=999.0;
-      rphicut2S_[11]=999.0;
-      rcut2S_[11]=999.0;      
+      rphicutPS_[8]=0.0;
+      rcutPS_[8]=0.0;
+      rphicut2S_[8]=0.0;
+      rcut2S_[8]=0.0;      
+      rphicutPS_[9]=0.0;
+      rcutPS_[9]=0.0;
+      rphicut2S_[9]=0.0;
+      rcut2S_[9]=0.0;      
+      rphicutPS_[10]=0.0;
+      rcutPS_[10]=0.0;
+      rphicut2S_[10]=0.6;
+      rcut2S_[10]=3.0;      
+      rphicutPS_[11]=0.0;
+      rcutPS_[11]=0.0;
+      rphicut2S_[11]=0.4;
+      rcut2S_[11]=3.0;      
     }
 
 
@@ -354,22 +354,22 @@ public:
       rcut2S_[6]=3.7;      
 
 
-      rphicutPS_[8]=999.0;
-      rcutPS_[8]=999.0;
-      rphicut2S_[8]=999.0;
-      rcut2S_[8]=999.0;      
-      rphicutPS_[9]=999.0;
-      rcutPS_[9]=999.0;
-      rphicut2S_[9]=999.0;
-      rcut2S_[9]=999.0;      
-      rphicutPS_[10]=999.0;
-      rcutPS_[10]=999.0;
-      rphicut2S_[10]=999.0;
-      rcut2S_[10]=999.0;      
-      rphicutPS_[11]=999.0;
-      rcutPS_[11]=999.0;
-      rphicut2S_[11]=999.0;
-      rcut2S_[11]=999.0;      
+      rphicutPS_[8]=0.0;
+      rcutPS_[8]=0.0;
+      rphicut2S_[8]=0.0;
+      rcut2S_[8]=0.0;      
+      rphicutPS_[9]=0.0;
+      rcutPS_[9]=0.0;
+      rphicut2S_[9]=0.0;
+      rcut2S_[9]=0.0;      
+      rphicutPS_[10]=0.0;
+      rcutPS_[10]=0.0;
+      rphicut2S_[10]=0.0;
+      rcut2S_[10]=0.0;      
+      rphicutPS_[11]=0.0;
+      rcutPS_[11]=0.0;
+      rphicut2S_[11]=0.8;
+      rcut2S_[11]=3.0;      
     }
 
     
@@ -628,9 +628,15 @@ public:
 		     fullmatchesToMinus_->getFPGATracklet(nmatch-1)->TCID());
 	    }
 	    
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+            fout.close();
 	    fullmatchesToMinus_->addMatch(tracklet,tmp);
 	  } else if (tracklet->minusNeighbor(layer_)) {
 	    assert(fullmatchesToPlus_!=0);
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+            fout.close();
 	    fullmatchesToPlus_->addMatch(tracklet,tmp);
 	  } else {
 	    for (unsigned int l=0;l<fullmatches_.size();l++){
@@ -655,26 +661,33 @@ public:
                     if (debug1) {
                       cout << getName()<<" adding match to "<<fullmatches_[l]->getName()<<endl;
                     }
+                    ofstream fout("seeds.txt", ofstream::app);
+                    fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+                    fout.close();
                     fullmatches_[l]->addMatch(tracklet,tmp);
                   } 
                 }
                 else {
                   int iSeed = tracklet->getISeed ();
                   if ((iSeed==0&&fullmatches_[l]->getName().substr(3,6)=="L1L2XX")||
-                      (iSeed==1&&fullmatches_[l]->getName().substr(3,6)=="L3L4XX")||
-                      (iSeed==2&&fullmatches_[l]->getName().substr(3,6)=="L5L6XX")||
-                      (iSeed==3&&fullmatches_[l]->getName().substr(3,6)=="D1D2XX")||
-                      (iSeed==4&&fullmatches_[l]->getName().substr(3,6)=="D3D4XX")||
-                      (iSeed==5&&fullmatches_[l]->getName().substr(3,6)=="L1D1XX")||
-                      (iSeed==6&&fullmatches_[l]->getName().substr(3,6)=="L2D1XX")||
-                      (iSeed==7&&fullmatches_[l]->getName().substr(3,6)=="L3L4L2")||
-                      (iSeed==8&&fullmatches_[l]->getName().substr(3,6)=="L5L6L4")||
-                      (iSeed==9&&fullmatches_[l]->getName().substr(3,6)=="L2L3D1")||
-                      (iSeed==10&&fullmatches_[l]->getName().substr(3,6)=="D1D2L2")){
+                      (iSeed==1&&fullmatches_[l]->getName().substr(3,6)=="L2L3XX")||
+                      (iSeed==2&&fullmatches_[l]->getName().substr(3,6)=="L3L4XX")||
+                      (iSeed==3&&fullmatches_[l]->getName().substr(3,6)=="L5L6XX")||
+                      (iSeed==4&&fullmatches_[l]->getName().substr(3,6)=="D1D2XX")||
+                      (iSeed==5&&fullmatches_[l]->getName().substr(3,6)=="D3D4XX")||
+                      (iSeed==6&&fullmatches_[l]->getName().substr(3,6)=="L1D1XX")||
+                      (iSeed==7&&fullmatches_[l]->getName().substr(3,6)=="L2D1XX")||
+                      (iSeed==8&&fullmatches_[l]->getName().substr(3,6)=="L3L4L2")||
+                      (iSeed==9&&fullmatches_[l]->getName().substr(3,6)=="L5L6L4")||
+                      (iSeed==10&&fullmatches_[l]->getName().substr(3,6)=="L2L3D1")||
+                      (iSeed==11&&fullmatches_[l]->getName().substr(3,6)=="D1D2L2")){
                     assert(tracklet->homeSector()==iSector_);
                     if (debug1) {
                       cout << getName()<<" adding match to "<<fullmatches_[l]->getName()<<endl;
                     }
+                    ofstream fout("seeds.txt", ofstream::app);
+                    fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+                    fout.close();
                     fullmatches_[l]->addMatch(tracklet,tmp);
                   } 
                 }
@@ -683,6 +696,9 @@ public:
 		    (tracklet->layer()==3&&fullmatches_[l]->getName().substr(3,2)=="L3")||
 		    (tracklet->layer()==5&&fullmatches_[l]->getName().substr(3,2)=="L5")){
 		  assert(tracklet->homeSector()==iSector_);
+                  ofstream fout("seeds.txt", ofstream::app);
+                  fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+                  fout.close();
 		  fullmatches_[l]->addMatch(tracklet,tmp);
 		}
 	      }
@@ -712,8 +728,11 @@ public:
 	  
 	double dz=stub->z()-tracklet->zprojdisk(disk);
 	
-	assert(fabs(dz)<dzmax);
-	
+	if(fabs(dz) > dzmax){
+	  cout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+	  cout << "stub "<<stub->z() <<" disk "<<disk<<" zproj "<<tracklet->zprojdisk(disk)<<" "<<dz<<endl;
+	  assert(fabs(dz)<dzmax);
+	}	
 	int iz=fpgastub->z().value();
 	  
 	int iphi=tracklet->fpgaphiprojdisk(disk).value();
@@ -862,7 +881,7 @@ public:
 	  
 	  double pt=0.003*3.8/fabs(tracklet->rinv());
 	  
-	  out << disk_<<" "<<stub->isPSmodule()<<" "<<seedlayer<<" "<<abs(seeddisk)<<" "<<pt<<" "
+	  out << disk_<<" "<<stub->isPSmodule()<<" "<<seedindex<<" "<<pt<<" "
 	      <<ideltaphi*kphiproj123*stub->r()<<" "<<drphiapprox<<" "
 	    //<<phimatchcut_[seedindex]*kphi1*rmean[layer_-1]<<" "
 	      <<drphicut<<" "
@@ -917,7 +936,7 @@ public:
             cout<<"Seed / ISeed "<<tracklet->seed()<<" "<<tracklet->getISeed()<<"\n";
           }
           assert(fabs(dphi)<0.25);
-          assert(fabs(dphiapprox)<0.2);
+          assert(fabs(dphiapprox)<0.25);
 
 	  tracklet->addMatchDisk(disk,ideltaphi,ideltar,
 				 drphi/stub->r(),dr,drphiapprox/stub->r(),drapprox,
@@ -931,6 +950,9 @@ public:
 	  }
 	  
 	  if (tracklet->plusNeighborDisk(disk)){
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+            fout.close();
 	    fullmatchesToMinus_->addMatch(tracklet,tmp);
 	    if (debug1) {
 	      cout << "Accepted full match to minus in disk " <<getName()<<" "<<tracklet
@@ -942,6 +964,9 @@ public:
 		     fullmatchesToMinus_->getFPGATracklet(nmatch-1)->TCID());
 	    }
 	  } else if (tracklet->minusNeighborDisk(disk)) {
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+            fout.close();
 	    fullmatchesToPlus_->addMatch(tracklet,tmp);
 	    if (debug1) {
 	      cout << "Accepted full match to plus in disk " <<getName()<<" "<<tracklet
@@ -965,26 +990,33 @@ public:
                     if (debug1) {
                       cout << getName()<<" adding match to "<<fullmatches_[l]->getName()<<endl;
                     }
+                    ofstream fout("seeds.txt", ofstream::app);
+                    fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+                    fout.close();
                     fullmatches_[l]->addMatch(tracklet,tmp);
                   }
                 }
                 else {
                   int iSeed = tracklet->getISeed ();
                   if ((iSeed==0&&fullmatches_[l]->getName().substr(3,6)=="L1L2XX")||
-                      (iSeed==1&&fullmatches_[l]->getName().substr(3,6)=="L3L4XX")||
-                      (iSeed==2&&fullmatches_[l]->getName().substr(3,6)=="L5L6XX")||
-                      (iSeed==3&&fullmatches_[l]->getName().substr(3,6)=="D1D2XX")||
-                      (iSeed==4&&fullmatches_[l]->getName().substr(3,6)=="D3D4XX")||
-                      (iSeed==5&&fullmatches_[l]->getName().substr(3,6)=="L1D1XX")||
-                      (iSeed==6&&fullmatches_[l]->getName().substr(3,6)=="L2D1XX")||
-                      (iSeed==7&&fullmatches_[l]->getName().substr(3,6)=="L3L4L2")||
-                      (iSeed==8&&fullmatches_[l]->getName().substr(3,6)=="L5L6L4")||
-                      (iSeed==9&&fullmatches_[l]->getName().substr(3,6)=="L2L3D1")||
-                      (iSeed==10&&fullmatches_[l]->getName().substr(3,6)=="D1D2L2")){
+                      (iSeed==1&&fullmatches_[l]->getName().substr(3,6)=="L2L3XX")||
+                      (iSeed==2&&fullmatches_[l]->getName().substr(3,6)=="L3L4XX")||
+                      (iSeed==3&&fullmatches_[l]->getName().substr(3,6)=="L5L6XX")||
+                      (iSeed==4&&fullmatches_[l]->getName().substr(3,6)=="D1D2XX")||
+                      (iSeed==5&&fullmatches_[l]->getName().substr(3,6)=="D3D4XX")||
+                      (iSeed==6&&fullmatches_[l]->getName().substr(3,6)=="L1D1XX")||
+                      (iSeed==7&&fullmatches_[l]->getName().substr(3,6)=="L2D1XX")||
+                      (iSeed==8&&fullmatches_[l]->getName().substr(3,6)=="L3L4L2")||
+                      (iSeed==9&&fullmatches_[l]->getName().substr(3,6)=="L5L6L4")||
+                      (iSeed==10&&fullmatches_[l]->getName().substr(3,6)=="L2L3D1")||
+                      (iSeed==11&&fullmatches_[l]->getName().substr(3,6)=="D1D2L2")){
                     assert(tracklet->homeSector()==iSector_);
                     if (debug1) {
                       cout << getName()<<" adding match to "<<fullmatches_[l]->getName()<<endl;
                     }
+                    ofstream fout("seeds.txt", ofstream::app);
+                    fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+                    fout.close();
                     fullmatches_[l]->addMatch(tracklet,tmp);
                   }
                 }
@@ -995,6 +1027,9 @@ public:
 		    ((tracklet->disk()==0&&tracklet->layer()==1)&&fullmatches_[l]->getName().substr(3,4)=="L1L2")||
 		    ((tracklet->disk()==0&&tracklet->layer()==3)&&fullmatches_[l]->getName().substr(3,4)=="L3L4")||
 		    ((abs(tracklet->disk())==3&&tracklet->layer()==0)&&fullmatches_[l]->getName().substr(3,4)=="D3D4")){
+                  ofstream fout("seeds.txt", ofstream::app);
+                  fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+                  fout.close();
 		  fullmatches_[l]->addMatch(tracklet,tmp);
 		  if (debug1) {
 		    cout << "In "<<getName()<<" added match to "<<fullmatches_[l]->getName()<<endl;

@@ -34,9 +34,9 @@ TTTracksFromTrackletEmulation = cms.EDProducer("L1FPGATrackProducer",
 #                                               memoryModulesFile  = cms.FileInPath('L1Trigger/TrackFindingTracklet/test/memorymodules_new.dat'),
 #                                               processingModulesFile  = cms.FileInPath('L1Trigger/TrackFindingTracklet/test/processingmodules_new.dat'),
 #                                               wiresFile  = cms.FileInPath('L1Trigger/TrackFindingTracklet/test/wires_new.dat'),
-                                               memoryModulesFile  = cms.FileInPath('L1Trigger/TrackFindingTracklet/test/memorymodules_hourglassExtended.dat'),
-                                               processingModulesFile  = cms.FileInPath('L1Trigger/TrackFindingTracklet/test/processingmodules_hourglassExtended.dat'),
-                                               wiresFile  = cms.FileInPath('L1Trigger/TrackFindingTracklet/test/wires_hourglassExtended.dat'),
+                                               memoryModulesFile  = cms.FileInPath('L1Trigger/TrackFindingTracklet/test/memorymodules_hourglassExtended.dat'), #change it to extended if running on it
+                                               processingModulesFile  = cms.FileInPath('L1Trigger/TrackFindingTracklet/test/processingmodules_hourglassExtended.dat'), #change it to extended if running on it
+                                               wiresFile  = cms.FileInPath('L1Trigger/TrackFindingTracklet/test/wires_hourglassExtended.dat'), #change it to extended if running on it
                                                DTCLinkFile  = cms.FileInPath('L1Trigger/TrackFindingTracklet/test/calcNumDTCLinks.txt'),
                                                moduleCablingFile  = cms.FileInPath('L1Trigger/TrackFindingTracklet/test/modules_T5v3_27SP_nonant_tracklet.dat')
     )

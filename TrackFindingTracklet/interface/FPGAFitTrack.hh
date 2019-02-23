@@ -1359,12 +1359,10 @@ class FPGAFitTrack:public FPGAProcessBase{
 
     if(debug1) cout<<getName()<<" : nMatches = "<<nMatches<<" "<<asinh(bestTracklet->t())<<"\n";
 
-    if (nMatches>=1) { // aedit , should've been >=2
+    if ((hourglassExtended && nMatches>=1) || nMatches>=2) { // aedit , should've been >=2
      countFit++;
-        if (hourglassExtended) {
           if (fakefit) trackFitFake(bestTracklet);
-          else trackFitNew(bestTracklet);}
-        else                   trackFitNew(bestTracklet);
+          else trackFitNew(bestTracklet);
      if (bestTracklet->fit()){
       assert(trackfit_!=0);
       trackfit_->addTrack(bestTracklet);

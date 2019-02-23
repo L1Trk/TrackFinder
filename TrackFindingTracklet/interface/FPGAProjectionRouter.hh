@@ -316,6 +316,9 @@ public:
 	    //	 <<endl;
 	    //assert(inputproj_[j]->getFPGATracklet(i)->homeSector()==iSector_);
 	  }
+          ofstream fout("seeds.txt", ofstream::app);
+          fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << inputproj_[j]->getFPGATracklet(i)->getISeed() << endl;
+          fout.close();
 	  allproj_->addTracklet(inputproj_[j]->getFPGATracklet(i));
 
 	  //cout << "index iphi : "<<index<<" "<<iphi<<endl;
@@ -323,64 +326,88 @@ public:
 	  if (iphi==0) {
 	    assert(vmprojPHI1_!=0);
 	    if (debug1){
-	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI1_->getName()<<endl;
+	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI1_->getName()<<" layer = "<<layer_<<endl;
 	    }
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << inputproj_[j]->getFPGATracklet(i)->getISeed() << endl;
+            fout.close();
 	    vmprojPHI1_->addTracklet(inputproj_[j]->getFPGATracklet(i),index);
 	  }
 
 	  if (iphi==1) {
 	    assert(vmprojPHI2_!=0);
 	    if (debug1){
-	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI2_->getName()<<endl;
+	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI2_->getName()<<" layer = "<<layer_<<endl;
 	    }
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << inputproj_[j]->getFPGATracklet(i)->getISeed() << endl;
+            fout.close();
 	    vmprojPHI2_->addTracklet(inputproj_[j]->getFPGATracklet(i),index);
 	  }
 
 	  if (iphi==2) {
 	    assert(vmprojPHI3_!=0);
 	    if (debug1){
-	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI3_->getName()<<endl;
+	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI3_->getName()<<" layer = "<<layer_<<endl;
 	    }
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << inputproj_[j]->getFPGATracklet(i)->getISeed() << endl;
+            fout.close();
 	    vmprojPHI3_->addTracklet(inputproj_[j]->getFPGATracklet(i),index);
 	  }
 
 	  if (iphi==3) {
 	    assert(vmprojPHI4_!=0);
 	    if (debug1){
-	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI4_->getName()<<endl;
+	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI4_->getName()<<" layer = "<<layer_<<endl;
 	    }
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << inputproj_[j]->getFPGATracklet(i)->getISeed() << endl;
+            fout.close();
 	    vmprojPHI4_->addTracklet(inputproj_[j]->getFPGATracklet(i),index);
 	  }
 
 	  if (iphi==4) {
 	    assert(vmprojPHI5_!=0);
 	    if (debug1){
-	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI5_->getName()<<endl;
+	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI5_->getName()<<" layer = "<<layer_<<endl;
 	    }
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << inputproj_[j]->getFPGATracklet(i)->getISeed() << endl;
+            fout.close();
 	    vmprojPHI5_->addTracklet(inputproj_[j]->getFPGATracklet(i),index);
 	  }
 	  
 	  if (iphi==5) {
 	    assert(vmprojPHI6_!=0);
 	    if (debug1){
-	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI6_->getName()<<endl;
+	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI6_->getName()<<" layer = "<<layer_<<endl;
 	    }
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << inputproj_[j]->getFPGATracklet(i)->getISeed() << endl;
+            fout.close();
 	    vmprojPHI6_->addTracklet(inputproj_[j]->getFPGATracklet(i),index);
 	  }
 	  
 	  if (iphi==6) {
 	    assert(vmprojPHI7_!=0);
 	    if (debug1){
-	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI7_->getName()<<endl;
+	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI7_->getName()<<" layer = "<<layer_<<endl;
 	    }
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << inputproj_[j]->getFPGATracklet(i)->getISeed() << endl;
+            fout.close();
 	    vmprojPHI7_->addTracklet(inputproj_[j]->getFPGATracklet(i),index);
 	  }
 	  
 	  if (iphi==7) {
 	    assert(vmprojPHI8_!=0);
 	    if (debug1){
-	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI8_->getName()<<endl;
+	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI8_->getName()<<" layer = "<<layer_<<endl;
 	    }
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << inputproj_[j]->getFPGATracklet(i)->getISeed() << endl;
+            fout.close();
 	    vmprojPHI8_->addTracklet(inputproj_[j]->getFPGATracklet(i),index);
 	  }
 	  
@@ -429,6 +456,9 @@ public:
 	  assert(allproj_!=0);
 
 	  unsigned int index=allproj_->nTracklets();
+          ofstream fout("seeds.txt", ofstream::app);
+          fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << inputproj_[j]->getFPGATracklet(i)->getISeed() << endl;
+          fout.close();
 	  allproj_->addTracklet(inputproj_[j]->getFPGATracklet(i));
 
 	  FPGATracklet* tracklet=inputproj_[j]->getFPGATracklet(i);
@@ -450,64 +480,88 @@ public:
 	  if (iphi==0) {
 	    assert(vmprojPHI1_!=0);
 	    if (debug1){
-	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI1_->getName()<<endl;
+	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI1_->getName()<<" disk="<<disk_<<endl;
 	    }
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << inputproj_[j]->getFPGATracklet(i)->getISeed() << endl;
+            fout.close();
 	    vmprojPHI1_->addTracklet(inputproj_[j]->getFPGATracklet(i),index);
 	  }
 
 	  if (iphi==1) {
 	    assert(vmprojPHI2_!=0);
 	    if (debug1){
-	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI2_->getName()<<endl;
+	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI2_->getName()<<" disk="<<disk_<<endl;
 	    }
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << inputproj_[j]->getFPGATracklet(i)->getISeed() << endl;
+            fout.close();
 	    vmprojPHI2_->addTracklet(inputproj_[j]->getFPGATracklet(i),index);
 	  }
 
 	  if (iphi==2) {
 	    assert(vmprojPHI3_!=0);
 	    if (debug1){
-	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI3_->getName()<<endl;
+	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI3_->getName()<<" disk="<<disk_<<endl;
 	    }
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << inputproj_[j]->getFPGATracklet(i)->getISeed() << endl;
+            fout.close();
 	    vmprojPHI3_->addTracklet(inputproj_[j]->getFPGATracklet(i),index);
 	  }
 
 	  if (iphi==3) {
 	    assert(vmprojPHI4_!=0);
 	    if (debug1){
-	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI4_->getName()<<endl;
+	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI4_->getName()<<" disk="<<disk_<<endl;
 	    }
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << inputproj_[j]->getFPGATracklet(i)->getISeed() << endl;
+            fout.close();
 	    vmprojPHI4_->addTracklet(inputproj_[j]->getFPGATracklet(i),index);
 	  }	  
 
 	  if (iphi==4) {
 	    assert(vmprojPHI5_!=0);
 	    if (debug1){
-	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI5_->getName()<<endl;
+	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI5_->getName()<<" disk="<<disk_<<endl;
 	    }
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << inputproj_[j]->getFPGATracklet(i)->getISeed() << endl;
+            fout.close();
 	    vmprojPHI5_->addTracklet(inputproj_[j]->getFPGATracklet(i),index);
 	  }	  
 
 	  if (iphi==5) {
 	    assert(vmprojPHI6_!=0);
 	    if (debug1){
-	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI6_->getName()<<endl;
+	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI6_->getName()<<" disk="<<disk_<<endl;
 	    }
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << inputproj_[j]->getFPGATracklet(i)->getISeed() << endl;
+            fout.close();
 	    vmprojPHI6_->addTracklet(inputproj_[j]->getFPGATracklet(i),index);
 	  }	  
 
 	  if (iphi==6) {
 	    assert(vmprojPHI7_!=0);
 	    if (debug1){
-	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI7_->getName()<<endl;
+	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI7_->getName()<<" disk="<<disk_<<endl;
 	    }
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << inputproj_[j]->getFPGATracklet(i)->getISeed() << endl;
+            fout.close();
 	    vmprojPHI7_->addTracklet(inputproj_[j]->getFPGATracklet(i),index);
 	  }	  
 
 	  if (iphi==7) {
 	    assert(vmprojPHI8_!=0);
 	    if (debug1){
-	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI8_->getName()<<endl;
+	      cout << "FPGAProjectionRouter "<<getName()<<" add projection to : "<<vmprojPHI8_->getName()<<" disk="<<disk_<<endl;
 	    }
+            ofstream fout("seeds.txt", ofstream::app);
+            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << inputproj_[j]->getFPGATracklet(i)->getISeed() << endl;
+            fout.close();
 	    vmprojPHI8_->addTracklet(inputproj_[j]->getFPGATracklet(i),index);
 	  }	  
 	}

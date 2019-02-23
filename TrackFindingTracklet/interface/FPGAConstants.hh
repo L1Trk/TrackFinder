@@ -18,7 +18,7 @@ static bool printDebugKF=false; // if true print lots of debugging statements re
 
 
 static bool hourglass=true;
-static bool hourglassExtended=true;
+static bool hourglassExtended=true; //change the file at Tracklet_cfi to match this
 
 //Gemetry extensions
 static std::string geomext=hourglass?(hourglassExtended?"hourglassExtended":"hourglass"):"new";  
@@ -44,7 +44,7 @@ static bool writeHLSInvTable=false; //Write out tables of drinv and invt in trac
 static bool writeFitDerTable=false; //Write out track derivative tables
 
 
-static bool writeDTCLinks=false;
+//static bool writeDTCLinks=false;
 static bool writeIL=false;
 static bool writeStubsLayer=false;
 static bool writeStubsLayerperSector=false;
@@ -107,6 +107,12 @@ static bool writeoutReal = false;
 static bool writemem=false; //Note that for 'full' detector this will open
                             //a LOT of files, and the program will run excruciatingly slow
 static unsigned int writememsect=3;  //writemem only for this sector
+
+static bool writeTripletTables=false; //Train and write the TED and TRE tables. N.B.: the tables
+                                      //cannot be applied while they are being trained, i.e.,
+                                      //this flag effectively turns off the cuts in
+                                      //FPGATrackletEngineDisplaced and FPGATripletEngine
+
 
 static bool warnNoMem=false;  //If true will print out warnings about missing projection memories
 
