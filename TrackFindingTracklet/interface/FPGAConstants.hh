@@ -450,7 +450,7 @@ static int minIndStubs=3;
 static bool AdjacentRemoval=true;
 static std::string RemovalType="";
 //"ichi" (pairwise, keep track with best ichisq), "nstub" (pairwise, keep track with more stubs), "grid" (TMTT-like removal), "" (no removal)
-static bool fakefit=true;
+static bool fakefit=false;
 
 
 #endif
