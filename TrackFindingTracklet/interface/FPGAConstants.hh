@@ -449,7 +449,7 @@ static int chisqzfactbits=14;
 //Duplicate Removal
 static int minIndStubs=3;
 static bool AdjacentRemoval=true;
-static std::string RemovalType="";
+static std::string RemovalType="ichi";
 //"ichi" (pairwise, keep track with best ichisq), "nstub" (pairwise, keep track with more stubs), "grid" (TMTT-like removal), "" (no removal)
 static bool fakefit=false; // This is a flag to turn on KF (fakefit true => no KF) ****************
 
