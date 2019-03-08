@@ -11,14 +11,14 @@
 //(Please also follow the instructions in L1Trigger/TrackFindingTMTT/README_HLS.txt).
 //#define USE_HLS
 
-static unsigned int nHelixPar = 5; // 4 or 5 param helix fit.
+static unsigned int nHelixPar = 4; // 4 or 5 param helix fit.
 
 static bool doKF=true; //true if using KF (and USEHYBRID uncommented)
 static bool printDebugKF=false; // if true print lots of debugging statements related to the KF fit
 
 
 static bool hourglass=true;
-static bool hourglassExtended=true; //change the file at Tracklet_cfi to match this
+static bool hourglassExtended=false; // This is turn on Displaced Tracking. Also change the file in Tracklet_cfi from hourglass to hourglassExtended ****************
 
 //Gemetry extensions
 static std::string geomext=hourglass?(hourglassExtended?"hourglassExtended":"hourglass"):"new";  
@@ -51,6 +51,7 @@ static bool writeStubsLayerperSector=false;
 static bool writeAllStubs=false;
 static bool writeVMOccupancyME=false;
 static bool writeVMOccupancyTE=false;
+static bool writeSeeds=true;
 static bool writeTE=false;
 static bool writeTED=false;
 static bool writeTRE=false;
@@ -450,7 +451,7 @@ static int minIndStubs=3;
 static bool AdjacentRemoval=true;
 static std::string RemovalType="";
 //"ichi" (pairwise, keep track with best ichisq), "nstub" (pairwise, keep track with more stubs), "grid" (TMTT-like removal), "" (no removal)
-static bool fakefit=false;
+static bool fakefit=false; // This is a flag to turn on KF (fakefit true => no KF) ****************
 
 
 #endif

@@ -17,7 +17,7 @@ public:
     phimin_=phimin;
     phimax_=phimax;
 
-    cout<<"***"<<__FILE__<<":"<<__LINE__<<"*** "<<hourglassExtended<<endl;
+    // cout<<"***"<<__FILE__<<":"<<__LINE__<<"*** "<<hourglassExtended<<endl; // A debug statement to see if the right files are loaded.
 
     string subname=name.substr(11,2);
     if (subname[0]=='_') subname=name.substr(12,2);
