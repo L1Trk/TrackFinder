@@ -628,15 +628,19 @@ public:
 		     fullmatchesToMinus_->getFPGATracklet(nmatch-1)->TCID());
 	    }
 	    
-            ofstream fout("seeds.txt", ofstream::app);
-            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
-            fout.close();
+            if(writeSeeds){
+                        ofstream fout("seeds.txt", ofstream::app);
+                        fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+                        fout.close();
+                      }
 	    fullmatchesToMinus_->addMatch(tracklet,tmp);
 	  } else if (tracklet->minusNeighbor(layer_)) {
 	    assert(fullmatchesToPlus_!=0);
-            ofstream fout("seeds.txt", ofstream::app);
-            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
-            fout.close();
+            if(writeSeeds){
+                        ofstream fout("seeds.txt", ofstream::app);
+                        fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+                        fout.close();
+                      }
 	    fullmatchesToPlus_->addMatch(tracklet,tmp);
 	  } else {
 	    for (unsigned int l=0;l<fullmatches_.size();l++){
@@ -661,9 +665,11 @@ public:
                     if (debug1) {
                       cout << getName()<<" adding match to "<<fullmatches_[l]->getName()<<endl;
                     }
-                    ofstream fout("seeds.txt", ofstream::app);
-                    fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
-                    fout.close();
+                    if(writeSeeds){
+                                        ofstream fout("seeds.txt", ofstream::app);
+                                        fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+                                        fout.close();
+                                      }
                     fullmatches_[l]->addMatch(tracklet,tmp);
                   } 
                 }
@@ -685,9 +691,11 @@ public:
                     if (debug1) {
                       cout << getName()<<" adding match to "<<fullmatches_[l]->getName()<<endl;
                     }
-                    ofstream fout("seeds.txt", ofstream::app);
-                    fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
-                    fout.close();
+                    if(writeSeeds){
+                                        ofstream fout("seeds.txt", ofstream::app);
+                                        fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+                                        fout.close();
+                                      }
                     fullmatches_[l]->addMatch(tracklet,tmp);
                   } 
                 }
@@ -696,9 +704,11 @@ public:
 		    (tracklet->layer()==3&&fullmatches_[l]->getName().substr(3,2)=="L3")||
 		    (tracklet->layer()==5&&fullmatches_[l]->getName().substr(3,2)=="L5")){
 		  assert(tracklet->homeSector()==iSector_);
-                  ofstream fout("seeds.txt", ofstream::app);
-                  fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
-                  fout.close();
+                  if(writeSeeds){
+                                    ofstream fout("seeds.txt", ofstream::app);
+                                    fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+                                    fout.close();
+                                  }
 		  fullmatches_[l]->addMatch(tracklet,tmp);
 		}
 	      }
@@ -950,9 +960,11 @@ public:
 	  }
 	  
 	  if (tracklet->plusNeighborDisk(disk)){
-            ofstream fout("seeds.txt", ofstream::app);
-            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
-            fout.close();
+            if(writeSeeds){
+                        ofstream fout("seeds.txt", ofstream::app);
+                        fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+                        fout.close();
+                      }
 	    fullmatchesToMinus_->addMatch(tracklet,tmp);
 	    if (debug1) {
 	      cout << "Accepted full match to minus in disk " <<getName()<<" "<<tracklet
@@ -964,9 +976,11 @@ public:
 		     fullmatchesToMinus_->getFPGATracklet(nmatch-1)->TCID());
 	    }
 	  } else if (tracklet->minusNeighborDisk(disk)) {
-            ofstream fout("seeds.txt", ofstream::app);
-            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
-            fout.close();
+            if(writeSeeds){
+                        ofstream fout("seeds.txt", ofstream::app);
+                        fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+                        fout.close();
+                      }
 	    fullmatchesToPlus_->addMatch(tracklet,tmp);
 	    if (debug1) {
 	      cout << "Accepted full match to plus in disk " <<getName()<<" "<<tracklet
@@ -990,9 +1004,11 @@ public:
                     if (debug1) {
                       cout << getName()<<" adding match to "<<fullmatches_[l]->getName()<<endl;
                     }
-                    ofstream fout("seeds.txt", ofstream::app);
-                    fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
-                    fout.close();
+                    if(writeSeeds){
+                                        ofstream fout("seeds.txt", ofstream::app);
+                                        fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+                                        fout.close();
+                                      }
                     fullmatches_[l]->addMatch(tracklet,tmp);
                   }
                 }
@@ -1014,9 +1030,11 @@ public:
                     if (debug1) {
                       cout << getName()<<" adding match to "<<fullmatches_[l]->getName()<<endl;
                     }
-                    ofstream fout("seeds.txt", ofstream::app);
-                    fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
-                    fout.close();
+                    if(writeSeeds){
+                                        ofstream fout("seeds.txt", ofstream::app);
+                                        fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+                                        fout.close();
+                                      }
                     fullmatches_[l]->addMatch(tracklet,tmp);
                   }
                 }
@@ -1027,9 +1045,11 @@ public:
 		    ((tracklet->disk()==0&&tracklet->layer()==1)&&fullmatches_[l]->getName().substr(3,4)=="L1L2")||
 		    ((tracklet->disk()==0&&tracklet->layer()==3)&&fullmatches_[l]->getName().substr(3,4)=="L3L4")||
 		    ((abs(tracklet->disk())==3&&tracklet->layer()==0)&&fullmatches_[l]->getName().substr(3,4)=="D3D4")){
-                  ofstream fout("seeds.txt", ofstream::app);
-                  fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
-                  fout.close();
+                  if(writeSeeds){
+                                    ofstream fout("seeds.txt", ofstream::app);
+                                    fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+                                    fout.close();
+                                  }
 		  fullmatches_[l]->addMatch(tracklet,tmp);
 		  if (debug1) {
 		    cout << "In "<<getName()<<" added match to "<<fullmatches_[l]->getName()<<endl;

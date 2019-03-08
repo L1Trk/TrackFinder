@@ -199,7 +199,7 @@ class FPGAFitTrack:public FPGAProcessBase{
     }
 
     if (printDebugKF) cout << "Will create stub with : "<<kfphi<<" "<<kfr<<" "<<kfz<<" "<<kfbend<<" "<<kflayer<<" "<<barrel<<" "<<psmodule<<" "<<endl;
-    TMTT::Stub* stubptr= new TMTT::Stub(kfphi,kfr,kfz,kfbend,kflayer, psmodule, barrel, iphi, alpha, settings, nullptr, stubID);
+    TMTT::Stub* stubptr= new TMTT::Stub(kfphi,kfr,kfz,kfbend,kflayer, psmodule, barrel, iphi, -alpha, settings, nullptr, stubID);
     stubs.push_back(stubptr);
     stubIndices[stubID++] = tracklet->innerStub();
 
@@ -220,7 +220,7 @@ class FPGAFitTrack:public FPGAProcessBase{
 
 
     if (printDebugKF) cout << "Will create stub with : "<<kfphi<<" "<<kfr<<" "<<kfz<<" "<<kfbend<<" "<<kflayer<<" "<<barrel<<" "<<psmodule<<" "<<endl;
-    stubptr= new TMTT::Stub(kfphi,kfr,kfz,kfbend,kflayer, psmodule ,barrel, iphi, alpha, settings, nullptr, stubID);
+    stubptr= new TMTT::Stub(kfphi,kfr,kfz,kfbend,kflayer, psmodule ,barrel, iphi, -alpha, settings, nullptr, stubID);
     stubs.push_back(stubptr);
     stubIndices[stubID++] = tracklet->outerStub();
 
@@ -305,7 +305,7 @@ class FPGAFitTrack:public FPGAProcessBase{
 
 
      if (printDebugKF) cout <<kfphi<<" "<<kfr<<" "<<kfz<<" "<<kfbend<<" "<<kflayer<<" "<<barrel<<" "<<psmodule<<" "<<endl;
-     stubptr= new TMTT::Stub(kfphi,kfr,kfz,kfbend,kflayer,psmodule,barrel, iphi, alpha, settings, nullptr, stubID);
+     stubptr= new TMTT::Stub(kfphi,kfr,kfz,kfbend,kflayer,psmodule,barrel, iphi, -alpha, settings, nullptr, stubID);
      stubs.push_back(stubptr);
      stubIndices[stubID++] = l1stubptr;
     }

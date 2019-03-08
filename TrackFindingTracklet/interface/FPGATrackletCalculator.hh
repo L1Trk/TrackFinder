@@ -1876,9 +1876,11 @@ public:
     tracklet->setTrackletIndex(trackletpars_->nTracklets());
     tracklet->setTCIndex(TCIndex_);
 
-    ofstream fout("seeds.txt", ofstream::app);
-    fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
-    fout.close();
+    if(writeSeeds){
+        ofstream fout("seeds.txt", ofstream::app);
+        fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+        fout.close();
+      }
     trackletpars_->addTracklet(tracklet);
     
     bool addL3=false;
@@ -2315,9 +2317,11 @@ public:
     tracklet->setTrackletIndex(trackletpars_->nTracklets());
     tracklet->setTCIndex(TCIndex_);
 
-    ofstream fout("seeds.txt", ofstream::app);
-    fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
-    fout.close();
+    if(writeSeeds){
+        ofstream fout("seeds.txt", ofstream::app);
+        fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+        fout.close();
+      }
     trackletpars_->addTracklet(tracklet);
     
     if (tracklet->validProj(1)) {
@@ -2774,9 +2778,11 @@ public:
     tracklet->setTrackletIndex(trackletpars_->nTracklets());
     tracklet->setTCIndex(TCIndex_);
     
-    ofstream fout("seeds.txt", ofstream::app);
-    fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
-    fout.close();
+    if(writeSeeds){
+        ofstream fout("seeds.txt", ofstream::app);
+        fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << tracklet->getISeed() << endl;
+        fout.close();
+      }
     trackletpars_->addTracklet(tracklet);
     
     int layer=outerFPGAStub->layer().value()+1;

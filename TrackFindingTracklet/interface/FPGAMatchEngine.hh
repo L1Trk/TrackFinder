@@ -208,9 +208,11 @@ public:
 	    
 	    countpass++;
 	    if (nmatches<1000) {
-              ofstream fout("seeds.txt", ofstream::app);
-              fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << proj->getISeed() << endl;
-              fout.close();
+              if(writeSeeds){
+                            ofstream fout("seeds.txt", ofstream::app);
+                            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << proj->getISeed() << endl;
+                            fout.close();
+                        }
 	      candmatches_->addMatch(proj,stub);
 	    }
 	    nmatches++;
@@ -306,9 +308,11 @@ public:
 	      if (debug1) {
 		cout << getName() << " adding match " << stub.first->disk().value()<<" "<< proj->disk()<<endl;
 	      }
-              ofstream fout("seeds.txt", ofstream::app);
-              fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << proj->getISeed() << endl;
-              fout.close();
+              if(writeSeeds){
+                            ofstream fout("seeds.txt", ofstream::app);
+                            fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << proj->getISeed() << endl;
+                            fout.close();
+                        }
 	      candmatches_->addMatch(proj,stub);
 	    }
 	    nmatches++;

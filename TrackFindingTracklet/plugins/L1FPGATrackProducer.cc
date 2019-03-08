@@ -893,7 +893,7 @@ void L1FPGATrackProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSe
     
     vector<L1TStub> stubs;
 
-    if (1) {
+    if (doMyDebug) {
       cout << "FPGA Track pt, eta, phi, d0, z0, chi2, nstub, rinv = " 
 	   << track->pt() << " " << track->eta() << " " << track->phi0() << " " << track->d0()<<" "<<track->z0() << " " << track->chisq() << " " << stubptrs.size() << " " << track->rinv() << endl;
       cout << "INT FPGA Track irinv, iphi0, id0, iz0, it, ichisq = " 
