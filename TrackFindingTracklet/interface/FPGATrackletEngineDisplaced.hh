@@ -48,14 +48,10 @@ public:
     }
 
     iSeed_ = -1;
-    if (layer1_ == 3 && layer2_ == 4)
-      iSeed_ = 7;
-    if (layer1_ == 5 && layer2_ == 6)
-      iSeed_ = 8;
-    if (layer1_ == 2 && layer2_ == 3)
-      iSeed_ = 9;
-    if (disk1_ == 1 && disk2_ == 2)
-      iSeed_ = 10;
+    if (layer1_ == 3 && layer2_ == 4) iSeed_ = 8;
+    if (layer1_ == 5 && layer2_ == 6) iSeed_ = 9;
+    if (layer1_ == 2 && layer2_ == 3) iSeed_ = 10;
+    if (disk1_ == 1 && disk2_ == 2) iSeed_ = 11;
     
     firstphibits_=-1;
     secondphibits_=-1;
@@ -226,17 +222,21 @@ public:
 		       <<FPGAStub::benddecode(secondstub.first->bend().value(),secondstub.first->isPSmodule())
 		       <<endl;
 		}		
-		continue;
+                if (!writeTripletTables)
+                  continue;
 	      }
 	      		
 	      if (debug1) cout << "Adding layer-layer pair in " <<getName()<<endl;
               for(unsigned int isp=0; isp<stubpairs_.size(); ++isp){
-                if (table_.at(index).count(stubpairs_.at(isp)->getName()))
-                  stubpairs_.at(isp)->addStubPair(firststub,secondstub);
+                if (writeTripletTables || table_.at(index).count(stubpairs_.at(isp)->getName())) {
+                  if (writeSeeds) {
+                    ofstream fout("seeds.txt", ofstream::app);
+                    fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << iSeed_ << endl;
+                    fout.close();
+                  }
+                  stubpairs_.at(isp)->addStubPair(firststub,secondstub,index,getName());
+                }
               }
-              ofstream fout ("seedsTED.txt", ofstream::app);
-              fout << 0.0 << " " << iSeed_ << endl;
-              fout.close ();
 
 	      countpass++;
 	    }
@@ -331,17 +331,21 @@ public:
 		       <<FPGAStub::benddecode(secondstub.first->bend().value(),secondstub.first->isPSmodule())
 		       <<endl;
 		}		
-		continue;
+                if (!writeTripletTables)
+                  continue;
 	      }
 	      		
 	      if (debug1) cout << "Adding layer-layer pair in " <<getName()<<endl;
               for(unsigned int isp=0; isp<stubpairs_.size(); ++isp){
-                if (table_.at(index).count(stubpairs_.at(isp)->getName()))
-                  stubpairs_.at(isp)->addStubPair(firststub,secondstub);
+                if (writeTripletTables || table_.at(index).count(stubpairs_.at(isp)->getName())) {
+                  if (writeSeeds) {
+                    ofstream fout("seeds.txt", ofstream::app);
+                    fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << iSeed_ << endl;
+                    fout.close();
+                  }
+                  stubpairs_.at(isp)->addStubPair(firststub,secondstub,index,getName());
+                }
               }
-              ofstream fout ("seedsTED.txt", ofstream::app);
-              fout << 0.0 << " " << iSeed_ << endl;
-              fout.close ();
 
 	      countpass++;
 	    }
@@ -430,18 +434,22 @@ public:
 		       //<<" pass : "<<pttablefirst_[ptfirstindex]<<" "<<pttablesecond_[ptsecondindex]
 		       <<endl;
 		}
-		continue;
+                if (!writeTripletTables)
+                  continue;
 	      }
 
 	      if (debug1) cout << "Adding disk-disk pair in " <<getName()<<endl;
 	      
               for(unsigned int isp=0; isp<stubpairs_.size(); ++isp){
-                if (table_.at(index).count(stubpairs_.at(isp)->getName()))
-                  stubpairs_.at(isp)->addStubPair(firststub,secondstub);
+                if (writeTripletTables || table_.at(index).count(stubpairs_.at(isp)->getName())) {
+                  if (writeSeeds) {
+                    ofstream fout("seeds.txt", ofstream::app);
+                    fout << __FILE__ << ":" << __LINE__ << " " << name_ << "_" << iSector_ << " " << iSeed_ << endl;
+                    fout.close();
+                  }
+                  stubpairs_.at(isp)->addStubPair(firststub,secondstub,index,getName());
+                }
               }
-              ofstream fout ("seedsTED.txt", ofstream::app);
-              fout << 0.0 << " " << iSeed_ << endl;
-              fout.close ();
 	      countpass++;
 	
 	    }
