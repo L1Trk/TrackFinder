@@ -20,9 +20,13 @@ public:
   }
 
   void addStubPair(std::pair<FPGAStub*,L1TStub*> stub1,
-		   std::pair<FPGAStub*,L1TStub*> stub2) {
+		   std::pair<FPGAStub*,L1TStub*> stub2,
+                   const unsigned index = 0,
+                   const std::string &tedName = "") {
     stubs1_.push_back(stub1);
     stubs2_.push_back(stub2);
+    indices_.push_back(index);
+    tedNames_.push_back(tedName);
   }
 
   unsigned int nStubPairs() const {return stubs1_.size();}
@@ -35,9 +39,14 @@ public:
   L1TStub* getL1TStub2(unsigned int i) const {return stubs2_[i].second;}
   std::pair<FPGAStub*,L1TStub*> getStub2(unsigned int i) const {return stubs2_[i];}
 
+  unsigned getIndex(const unsigned i) const {return indices_.at(i);}
+  const std::string &getTEDName(const unsigned i) const {return tedNames_.at(i);}
+
   void clean() {
     stubs1_.clear();
     stubs2_.clear();
+    indices_.clear();
+    tedNames_.clear();
   }
 
   void writeSP(bool first) {
@@ -92,6 +101,9 @@ private:
   double phimax_;
   std::vector<std::pair<FPGAStub*,L1TStub*> > stubs1_;
   std::vector<std::pair<FPGAStub*,L1TStub*> > stubs2_;
+
+  std::vector<unsigned> indices_;
+  std::vector<std::string> tedNames_;
 
 };
 
