@@ -47,7 +47,7 @@ class kalmanState{
 	const StubCluster* stubCluster()const{ return     stubCluster_; }
 	double                    chi2()const{ return            chi2_; }
 	unsigned           nStubLayers()const{ return         n_stubs_; }
-        L1track3D            candidate()const{ return       l1track3D_; }
+    L1track3D            candidate()const{ return       l1track3D_; }
 
 	bool                            good( const TP *tp )const;
 	double                   reducedChi2()const;

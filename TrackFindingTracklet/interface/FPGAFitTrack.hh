@@ -317,6 +317,7 @@ class FPGAFitTrack:public FPGAProcessBase{
     double kfphi0=tracklet->phi0approx();
     double kfz0=tracklet->z0approx();
     double kft=tracklet->tapprox();
+    double kfd0=tracklet->d0approx();
 
     if (printDebugKF) {
      std::cout << "tracklet phi0 = "<< kfphi0 << std::endl;
@@ -370,7 +371,7 @@ class FPGAFitTrack:public FPGAProcessBase{
     if(kf_phi_sec < 0){kf_phi_sec+=9;}      
 
 
-    TMTT::L1track3D l1track3d(settings,stubs,celllocation,helixrphi,helixrz,kf_phi_sec,kf_eta_reg,1,false);
+    TMTT::L1track3D l1track3d(settings,stubs,celllocation,helixrphi,helixrz,-kfd0,kf_phi_sec,kf_eta_reg,1,false); //remember to change after fixing the convention.
 
     // Create Kalman track fitter.
     static bool firstPrint = true;

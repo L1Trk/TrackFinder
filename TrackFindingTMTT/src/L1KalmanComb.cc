@@ -362,7 +362,7 @@ L1fittedTrack L1KalmanComb::fit(const L1track3D& l1track3D){
     std::cout <<" HT(m,c)=("<<l1track3D.getCellLocationHT().first << "," 
 	                        <<l1track3D.getCellLocationHT().second << ") q/pt="
 	      <<l1track3D.qOverPt()<<" tanL="<<l1track3D.tanLambda()<< " z0="<<l1track3D.z0()<< " phi0="<<l1track3D.phi0()
-                                <<" nStubs="<<l1track3D.getNumStubs()<<std::endl;
+                                <<" nStubs="<<l1track3D.getNumStubs()<<" d0="<<l1track3D.d0()<<std::endl;
     if (not getSettings()->hybrid()) printTP( cout, tpa );
     if( getSettings()->kalmanDebugLevel() >= 2 ){
       printStubLayers( cout, stubs );
@@ -831,6 +831,7 @@ std::vector<const kalmanState *> L1KalmanComb::doKF( const L1track3D& l1track3D,
       cout<<"Track found! final state selection: nLay="<<stateFinal->nStubLayers()<<" etaReg="<<l1track3D.iEtaReg();
       std::map<std::string, double> y = getTrackParams( stateFinal );
       cout<<" q/pt="<<y["qOverPt"]<<" tanL="<<y["t"]<<" z0="<<y["z0"]<<" phi0="<<y["phi0"];
+      if(nPar_==5) cout<<" d0="<<y["d0"];
       cout<<" chosen from states:";
       for (const auto& p : best_state_by_nstubs) cout<<" "<<p.second->chi2()<<"/"<<p.second->nStubLayers();
       cout<<endl;
