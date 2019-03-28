@@ -442,14 +442,19 @@ bool KFParamsComb::isGoodState( const kalmanState &state )const
 
   }
 
-  if ( (getSettings()->kalmanDebugLevel() >= 2 && tpa_ != nullptr) ||
+  const bool countUpdateCalls = false; // Print statement to count calls to Updator.
+
+  if ( countUpdateCalls || 
+       (getSettings()->kalmanDebugLevel() >= 2 && tpa_ != nullptr) ||
        (getSettings()->kalmanDebugLevel() >= 2 && getSettings()->hybrid()) ) {
-    if (not goodState) cout<<"State veto: nlay="<<nStubLayers;
-    if (goodState)     cout<<"State kept: nlay="<<nStubLayers; 
-    cout<<" chi2="<<state.chi2()<<" pt="<<pt;
+    if (not goodState) cout<<"State veto:";
+    if (goodState)     cout<<"State kept:"; 
+    cout<<" nlay="<<nStubLayers<<" nskip="<<state.nSkippedLayers()<<" chi2="<<state.chi2();
     if (tpa_ != nullptr) cout<<" pt(mc)="<<tpa_->pt();
-    cout<<" q/pt="<<qOverPt<<" tanL="<<y["t"]<<" z0="<<y["z0"]<<" phi0="<<y["phi0"];
+    cout<<" pt="<<pt<<" q/pt="<<qOverPt<<" tanL="<<y["t"]<<" z0="<<y["z0"]<<" phi0="<<y["phi0"];
     if (nPar_ == 5) cout<<" d0="<<y["d0"];
+    cout<<" fake"<<(tpa_ == nullptr);
+    if (tpa_ != nullptr) cout<<" pt(mc)="<<tpa_->pt();
     cout<<endl;
   }
 

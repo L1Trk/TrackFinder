@@ -21,6 +21,9 @@
 // Enable debug printout to pair with that in Histos.cc enabled by recalc_debug.
 //#define RECALC_DEBUG
 
+// Enable merging of nearby stubs.
+//#define MERGE_STUBS
+
 namespace TMTT {
 
 unsigned LayerId[16] = { 1, 2, 3, 4, 5, 6, 11, 12, 13, 14, 15, 21, 22, 23, 24, 25 };
@@ -41,6 +44,7 @@ static bool orderStubsByLayer(const Stub* a, const Stub* b){
   return (a->layerId() < b->layerId());
 }
 
+#ifdef MERGE_STUBS
 static bool orderStubsByZ(const Stub* a, const Stub* b){
   return (a->z() < b->z());
 }
@@ -48,6 +52,7 @@ static bool orderStubsByZ(const Stub* a, const Stub* b){
 static bool orderStubsByR(const Stub* a, const Stub* b){
   return (a->r() < b->r());
 }
+#endif
 
 void printTPSummary( std::ostream &os, const TP *tp, bool addReturn=true ){
 	
@@ -233,6 +238,7 @@ L1fittedTrack L1KalmanComb::fit(const L1track3D& l1track3D){
 		
   sort(stubs.begin(), stubs.end(), orderStubsByLayer); // Unnecessary?
 
+#ifdef MERGE_STUBS
   // Eliminate identical duplicate stubs.
   for(unsigned i=0; i < stubs.size(); i++ ){
     const Stub *stub_a = stubs.at(i);
@@ -246,6 +252,7 @@ L1fittedTrack L1KalmanComb::fit(const L1track3D& l1track3D){
       }
     }
   }
+#endif
 
   std::vector<const StubCluster *> stubcls;
 
@@ -259,18 +266,19 @@ L1fittedTrack L1KalmanComb::fit(const L1track3D& l1track3D){
       }
     }
 
+#ifdef MERGE_STUBS
     if( LayerId[j_layer] < 10 ) 
       sort( layer_stubs.begin(), layer_stubs.end(), orderStubsByZ ); // barrel
     else
       sort( layer_stubs.begin(), layer_stubs.end(), orderStubsByR ); // endcap
+#endif
 
     for(unsigned i=0; i < layer_stubs.size(); i++ ){ // Stubs in single layer, ordered by z or r.
 
       std::vector<const Stub *> stubs_for_cls;
       stubs_for_cls.push_back(layer_stubs.at(i));
 
-      // disable clustering - each stub is its own cluster
-      /*
+#ifdef MERGE_STUBS
 	while( layer_stubs.at(i) != layer_stubs.back() ){
 	if( isOverlap( layer_stubs.at(i), layer_stubs.at(i+1), TYPE_NORMAL ) ){
 	stubs_for_cls.push_back( layer_stubs.at(i+1) );
@@ -280,7 +288,8 @@ L1fittedTrack L1KalmanComb::fit(const L1track3D& l1track3D){
 	}
 	else break;
 	}
-      */
+#endif
+
       if( getSettings()->kalmanFillInternalHists() ) {
 
 	if( tpa && tpa->useForAlgEff() ){
@@ -386,21 +395,25 @@ L1fittedTrack L1KalmanComb::fit(const L1track3D& l1track3D){
 
     L1fittedTrack returnTrk(getSettings(), l1track3D, cand->stubs(), trackParams["qOverPt"], trackParams["d0"], trackParams["phi0"], trackParams["z0"], trackParams["t"], cand->chi2(), nPar_, true);
 
-    if( getSettings()->kalmanDebugLevel() >= 3 ){
-      if (this->isHLS()) {
+    bool consistentHLS = false;
+    if (this->isHLS()) {
+      unsigned int mBinHelixHLS, cBinHelixHLS;
+      cand->getHLSextra(mBinHelixHLS, cBinHelixHLS, consistentHLS);
+      if( getSettings()->kalmanDebugLevel() >= 3 ){
         // Check if (m,c) corresponding to helix params are correctly calculated by HLS code.
-        unsigned int mBinHelixHLS, cBinHelixHLS;
-        bool consistentHLS;
-        cand->getHLSextra(mBinHelixHLS, cBinHelixHLS, consistentHLS);
         bool HLS_OK = ((mBinHelixHLS == returnTrk.getCellLocationFit().first) && (cBinHelixHLS == returnTrk.getCellLocationFit().second));
-        if (not HLS_OK) std::cout<<"CHECK BinHelix: OK = "<<HLS_OK
+        if (not HLS_OK) std::cout<<"WARNING HLS mBinHelix disagrees with C++:"
                                  <<" (HLS,C++) m=("<<mBinHelixHLS<<","<<returnTrk.getCellLocationFit().first <<")"
                                  <<" c=("<<cBinHelixHLS<<","<<returnTrk.getCellLocationFit().second<<")"<<endl;
       }
     }
 
     // Store supplementary info, specific to KF fitter.
-    returnTrk.setInfoKF( cand->nSkippedLayers(), numUpdateCalls_ );
+    if(this->isHLS() && nPar_ == 4) {
+      returnTrk.setInfoKF( cand->nSkippedLayers(), numUpdateCalls_, consistentHLS );
+    } else {
+      returnTrk.setInfoKF( cand->nSkippedLayers(), numUpdateCalls_ );
+    }
 
     // If doing 5 parameter fit, optionally also calculate helix params & chi2 with beam-spot constraint applied,
     // and store inside L1fittedTrack object.
@@ -416,7 +429,11 @@ L1fittedTrack L1KalmanComb::fit(const L1track3D& l1track3D){
     if (! getSettings()->hybrid() ) { // consistentSector() function not yet working for Hybrid.
       if (! returnTrk.consistentSector()) {
         L1fittedTrack failedTrk(getSettings(), l1track3D, cand->stubs(), trackParams["qOverPt"], trackParams["d0"], trackParams["phi0"], trackParams["z0"], trackParams["t"], cand->chi2(), nPar_, false);
-        failedTrk.setInfoKF( cand->nSkippedLayers(), numUpdateCalls_ );
+        if(this->isHLS() && nPar_ == 4) {
+          failedTrk.setInfoKF( cand->nSkippedLayers(), numUpdateCalls_, consistentHLS );
+        } else {
+          failedTrk.setInfoKF( cand->nSkippedLayers(), numUpdateCalls_ );
+        }
         return failedTrk;
       }
     }
@@ -595,8 +612,9 @@ std::vector<const kalmanState *> L1KalmanComb::doKF( const L1track3D& l1track3D,
 			
     }
 		
-    layerStubs[kalmanLayer].push_back( stubCluster );
-
+    if (layerStubs[kalmanLayer].size() < getSettings()->kalmanMaxStubsPerLayer()) {
+      if (kalmanLayer != 7) layerStubs[kalmanLayer].push_back( stubCluster );
+    }
   }
 
   // iterate using state->nextLayer() to determine next Kalman layer(s) to add stubs from
@@ -605,7 +623,8 @@ std::vector<const kalmanState *> L1KalmanComb::doKF( const L1track3D& l1track3D,
 
     int combinations_per_iteration = 0;
 		
-    unsigned int kalmanMaxSkipLayers = getSettings()->kalmanMaxSkipLayers();
+    bool easy = (l1track3D.getNumStubs() < getSettings()->kalmanMaxStubsEasy());
+    unsigned int kalmanMaxSkipLayers = easy ? getSettings()->kalmanMaxSkipLayersEasy() : getSettings()->kalmanMaxSkipLayersHard();
 		
     // update each state from previous iteration (or seed) using stubs in next Kalman layer
     std::vector<const kalmanState *>::const_iterator i_state = prev_states.begin();
@@ -711,35 +730,37 @@ std::vector<const kalmanState *> L1KalmanComb::doKF( const L1track3D& l1track3D,
       int i, max_states, max_states_skip;
 			
       // If layer contained several stubs, so several states now exist, select only the best ones.
+      // -- Disable this by setting to large values, as not used in latest KF firmware.
+      // (But not too big as this wastes CPU).
 
       switch ( iteration ) {
       case 0:
-	max_states = 12;
-	max_states_skip = 12;
+	max_states = 15;
+	max_states_skip = 15;
 	break;
       case 1:
-	max_states = 4;
-	max_states_skip = 4;
+	max_states = 15;
+	max_states_skip = 15;
 	break;
       case 2:
-	max_states = 4;
-	max_states_skip = 4;
+	max_states = 15;
+	max_states_skip = 15;
 	break;
       case 3:
-	max_states = 4;
-	max_states_skip = 4;
+	max_states = 15;
+	max_states_skip = 15;
 	break;
       case 4:
-	max_states = 4;
-	max_states_skip = 4;
+	max_states = 15;
+	max_states_skip = 15;
 	break;
       case 5:
-	max_states = 4;
-	max_states_skip = 4;
+	max_states = 15;
+	max_states_skip = 15;
 	break;
       default:
-	max_states = 999;
-	max_states_skip = 999;
+	max_states = 15;
+	max_states_skip = 15;
 	break;
       }
 			
@@ -831,7 +852,7 @@ std::vector<const kalmanState *> L1KalmanComb::doKF( const L1track3D& l1track3D,
       cout<<"Track found! final state selection: nLay="<<stateFinal->nStubLayers()<<" etaReg="<<l1track3D.iEtaReg();
       std::map<std::string, double> y = getTrackParams( stateFinal );
       cout<<" q/pt="<<y["qOverPt"]<<" tanL="<<y["t"]<<" z0="<<y["z0"]<<" phi0="<<y["phi0"];
-      if(nPar_==5) cout<<" d0="<<y["d0"];
+      if (nPar_==5) cout<<" d0="<<y["d0"];
       cout<<" chosen from states:";
       for (const auto& p : best_state_by_nstubs) cout<<" "<<p.second->chi2()<<"/"<<p.second->nStubLayers();
       cout<<endl;
