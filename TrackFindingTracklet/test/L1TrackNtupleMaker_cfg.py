@@ -46,26 +46,19 @@ process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:upgradePLS3', '')
 
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(100))
 
-if GEOMETRY == "D17":
+if GEOMETRY == "D17": # Tilted barrel T5 tracker
 
-    # Read in 
-    #list = FileUtils.loadListFromFile('../../TrackFindingTMTT/test/MCsamples/937/RelVal/TTbar/localRAL/PU200.txt')
+    # Get list of MC datasets from repo, or specify yourself.
+    #inputMC = FileUtils.loadListFromFile('../../TrackFindingTMTT/test/MCsamples/937/RelVal/TTbar/PU200.txt')
 
-    #D17 (tilted barrel -- latest and greatest with T5 tracker, see: https://github.com/cms-sw/cmssw/blob/CMSSW_9_3_0_pre2/Configuration/Geometry/README.md)
-    Source_Files = cms.untracked.vstring(
-#      *list
-#      "/store/relval/CMSSW_9_3_7/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/PU25ns_93X_upgrade2023_realistic_v5_2023D17PU200-v1/10000/5A8CFF7F-1E2D-E811-A7B0-0242AC130002.root"
-        "file:/cms/abhijith/hware/kf5par/CMSSW_10_1_7/src/L1Trigger/TrackFindingTracklet/test/5A8CFF7F-1E2D-E811-A7B0-0242AC130002.root"
-       # "file:/cms/abhijith/hware/CMSSW_9_2_0/src/L1Trigger/TrackTrigger/test/output/mH{0}_mh{1}_PU200/PU_Haa4_mH{0}_mh{1}_tau{2}_sample100_{3}_PU200_TkOnly.root".format(125,30,0,1)
-        # "file:/home/ahart/tracklet_events/DisplacedMuMinus.root"
-     # "file:/cms/abhijith/hware/promt_mu/MuMinus_1to50_TkOnly.root"
-        )
+    #inputMC = ['/store/relval/CMSSW_9_3_7/RelValTTbar_14TeV/GEN-SIM-DIGI-RAW/PU25ns_93X_upgrade2023_realistic_v5_2023D17PU200-v1/10000/5A8CFF7F-1E2D-E811-A7B0-0242AC130002.root']
+    #inputMC = ['file:/cms/abhijith/hware/kf5par/CMSSW_10_1_7/src/L1Trigger/TrackFindingTracklet/test/5A8CFF7F-1E2D-E811-A7B0-0242AC130002.root']
+
 elif GEOMETRY == "TkOnly":
-    Source_Files = cms.untracked.vstring(
-    "file:/afs/cern.ch/work/s/skinnari/public/L1TK_90X/MuMinus_1to10_TkOnly.root"
-    )
+    inputMC = ['file:/afs/cern.ch/work/s/skinnari/public/L1TK_90X/MuMinus_1to10_TkOnly.root']
+
 process.source = cms.Source("PoolSource", 
-                            fileNames = Source_Files,
+                            fileNames = cms.untracked.vstring(*inputMC),
                             inputCommands = cms.untracked.vstring(
                               'keep *_*_*_*',
                               'drop l1tEMTFHit2016*_*_*_*',
